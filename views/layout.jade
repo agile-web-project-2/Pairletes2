@@ -27,7 +27,7 @@ html
       br
       a(href="/profile/"+'#{user.id}') Profile
       br
-      a(href="/editprofile") Edit Profile
+      a(href="/editprofile/"+"#{user.id}") Edit Profile
       p You are currently logged in as #{user.username}
       a(href="/logout") Logout
 

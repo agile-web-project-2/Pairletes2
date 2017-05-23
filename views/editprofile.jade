@@ -5,8 +5,9 @@ block content
   
   
   if(user)
+    p #{user.id}
     p #{user.username}
-    form(action="/editprofile" method="put")
+    form(action="/editprofile" method="post")
       //- p Address:
       //- br
       //- input#street.form-control(type='text' value='')

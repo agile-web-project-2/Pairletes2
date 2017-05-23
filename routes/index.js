@@ -98,8 +98,8 @@ router.get('/editprofile', function(req, res) {
   });
 });
 
-/***** put UPDATE PROFILE *****/
-router.put('/editprofile/:id', ctrlAccount.updateProfile);
+/***** POST UPDATE PROFILE *****/
+router.post('/editprofile', ctrlAccount.updateProfile);
 
 
 

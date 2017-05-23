@@ -44,11 +44,14 @@ module.exports.getProfile = function(req,res){
 
 /*Update profile*/
 module.exports.updateProfile = function(req,res){
+  //Postman: POST, x-www-form-encoded
+  //key: id, value: 59233c4f0e7e4ed422d51d1a
+  //key: gym, value: 'jetts'
   console.log('hi');
   var account = new Account();
   //routed from /profile/:id
   //Found the account
-  Account.findById(req.params.id, function(err, account){
+  Account.findById(req.body.id, function(err, account){
     if(err)
       res.send(err);
 
@@ -60,9 +63,11 @@ module.exports.updateProfile = function(req,res){
         res.send(err);
         return;
       }
-
-      res.json(account);
+        res.redirect('/profile');
+      //res.json(account);
     })
 
   });
+
+
 };
