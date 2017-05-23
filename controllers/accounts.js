@@ -60,7 +60,6 @@ module.exports.getProfile = function(req,res){
     }
 
     res.render('profile.jade', {
-
         user: req.user,
         title: 'Profile',
         account: account,
@@ -74,23 +73,29 @@ module.exports.getProfile = function(req,res){
   });
 };
 
+
 /*UPDATE profile*/
 module.exports.updateProfile = function(req,res){
-  //Postman: POST, x-www-form-encoded req.body.id
-  //key: id, value: 5923dc317ed18c941dad6cb4
-  //key: gym, value: 'jetts'
-
+  //New instance of account object
   var account = new Account();
   //routed from /profile/:id
-  //Found the account
+
+  //Find the account
   Account.findById(req.user.id, function(err, account){
+    //Error handler
     if(err)
       res.send(err);
 
-    //console.log(req.user.id); //coming up undefined
-
-    //update
+    //UPDATE
+    account.address = {"street": req.body.street,
+      "city": req.body.city,
+      "state": req.body.state,
+      "country": req.body.country};
+    account.interests = {"interest1": req.body.interest1,
+      "interest2": req.body.interest2,
+      "interest3": req.body.interest3};
     account.gym = req.body.gym;
+    account.aboutMe = req.body.about;
 
     account.save(function(err){
       if(err){

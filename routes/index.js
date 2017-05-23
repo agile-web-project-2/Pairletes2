@@ -97,9 +97,44 @@ router.get('/profile/:id', ctrlAccount.getProfile);
 
 /***** EDIT PROFILE *****/
 router.get('/editprofile', function(req, res) {
+  var account = new Account();
+  //TO DISPLAY IN INPUT TEXTBOXES unused at the moment
+  //Check if gym returns a string or object
+  if (typeof account.gym != 'string'){
+    var gymVar = " ";
+  } else {
+    var gymVar = account.gym;
+  }
+
+  //Check if interests returns a string or object
+  if (typeof account.interests[0] == 'undefined'){
+    var intr = " ";
+  } else {
+    var intr = account.interests[0];
+  }
+
+  //Check if address returns a string or object
+  if (typeof account.address[0] == 'undefined'){
+    var addr = " ";
+  } else {
+    var addr = account.address[0];
+  }
+
+  //Check if aboutMe returns a string or object
+  if (typeof account.aboutMe == 'undefined'){
+    var about = " ";
+  } else {
+    var about = account.aboutMe;
+  }
+
   res.render('editprofile', {
+      user: req.user,
       title: 'Edit Profile',
-      user: req.user
+      account: account,
+      gym: gymVar,
+      interest: intr,
+      address: addr,
+      aboutMe: about
   });
 });
 
