@@ -1,13 +1,16 @@
 extends layout
 
 block content
-  .container
-     h1 Login Page
-     p Login to the simple app here.
+   h1 Login
+   .frame
      br
      form(action="/login",method="post")
-       label(for='username') Enter username:
-       input(id='username', type = 'text', name = 'username')
-       label(for='password') Enter password:
-       input(id='password', type = 'password', name = 'password')
-       input(type='submit', value='Submit')
+       .form-group
+         label(for='username') Username:
+         input.form-control(type='username' placeholder='Enter username' name='username')
+         
+       .form-group
+         label(for='password') Password:  
+         input.form-control(type='password' placeholder='Enter password' name='password')
+       |  
+       input.btn.btn-default(type='submit' value='Login')

@@ -1,40 +1,62 @@
 doctype html
-html
+html(lang='en')
   head
-    title= title
-    link(rel='stylesheet', href='./stylesheets/style.css')
-    link(rel='stylesheet', href='./stylesheets/chat.css')
+
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    meta(name='description', content='Pairletes is a fitness matchmaking app.')
+    meta(name='author', content='Matthew Seneque, Kieran Quirke-Brown and Debbie Yung')
+    title Pairletes
+    link(href='/css/bootstrap.css', rel='stylesheet')
+    link(href='/css/style.css', rel='stylesheet')
+    link(href='https://fonts.googleapis.com/css?family=Lobster+Two', rel='stylesheet')
       
     script(src="/socket.io/socket.io.js")
-    script(src="http://code.jquery.com/jquery-1.11.1.js")
-    script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js")
-
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js')
+    script(src='/js/bootstrap.js')
+    script(src='/js/jquery-3.2.1.min.js')
+    
   body
-    p Links
-    a(href='/') Home
-    br
-    a(href='/messages') Messages
-    br
-    //General links
-    //a(href="/person") Person
-    br
-    //Not logged in Links
-    if (!user)
-      a(href="/login") Login
-      br
-      a(href="/register") Register
-      
-    //Logged in Links
-    if (user)
-      br
-      a(href="/profile/"+'#{user.id}') Profile
-      br
-      a(href="/editprofile/"+"#{user.id}") Edit Profile
-      p You are currently logged in as #{user.username}
-      a(href="/logout") Logout
+    .site-wrapper
+          .site-wrapper-inner
+            .cover-container
+              .masthead.clearfix
+                if (user)
+                  .login-status
+                  p Welcome, #{user.username}!
+                .inner
+                  h3.masthead-brand.logo 
+                    a.logo(href="/") Pairletes              
+                        
+                  nav
+                    ul.nav.masthead-nav
+                      li
+                        a(href="/about") About
+                      li
+                        a(href='/messages') Messages
+                      
+                      //NOT LOGGED IN
+                      if (!user)
+                        li
+                          a(href="/login") Login
+                        li 
+                          a(href="/register") Register
+                      
+                      //LOGGED IN
+                      if (user)
+                        li 
+                          a(href="/profile/"+'#{user.id}') Profile
+                        li.active
+                          a(href="/logout") Logout
+                        
+              
+                
+              .inner.cover    
+                block content
+              .mastfoot
+                .inner
+                  p &copy; 2017 Matthew Seneque, Kieran Quirke-Brown and Debbie Yung 
 
 
-    #content(width='50%', float='left')    
-      block content
-      
     

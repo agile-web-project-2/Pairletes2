@@ -46,7 +46,6 @@ block content
       });
 
 
-    
   .container
     #chatwindow
       #contents
@@ -57,5 +56,5 @@ block content
         ul(id="messages")
     
         form(action="", id='msgForm', onSubmit='return false;')
-          input(id="data" autocomplete="off")
-          button(type='button', onClick='#dataSend' value="send") Send
+          input.form-control(id="data" autocomplete="off")
+          button.btn.btn-default(type='button', onClick='#dataSend' value="send") Send

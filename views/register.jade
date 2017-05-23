@@ -1,28 +1,37 @@
 extends layout
 
 block content
-  .container
-    h1 Registration Page
-    p Register here
-    br
-    form(action="/register",method="post")
-      label(for='username') Enter Username:
-      input(id='username', type = 'text', name = 'username')
-      br
-      label(for='password') Enter Email
-      input(id='email',type ='email', name='email')
-      br
-      label(for='password') Enter Password
-      input(id='password',type ='password', name='password')
-      br
-      label(for='password') Enter Gender
-      select#gender.form-control(name='gender')
-          option(value='Female') Female
-          option(value='Male') Male  
-      br
-      label Enter Birthday 
-      input#day.dobForm(type='text', placeholder='dd', name='day', maxlength=2)
-      input#mth.dobForm(type='text', placeholder='mm', name='mth', maxlength=2)
-      input#yr.dobForm(type='text', placeholder='yyyy', name='yr', maxlength=4)
-      p lets just assume people will input the correct date for now
-      input(type='submit', value='Register')
+
+  h1 Registration Page
+  br
+  form(action="/register",method="post")
+  .form-group
+    label(for='username') Username: 
+    input#username.form-control(type='text' placeholder='Enter your name' name='username')
+
+    
+  .form-group
+    label(for='email') Email: 
+    input#email.form-control(type='email' placeholder='Enter email' name='email')
+
+    
+  .form-group
+    label(for='password') Password:  
+    input#pwd.form-control(type='password', placeholder='Enter password' name='password' autocomplete="new-password")
+
+    
+  .form-group
+    label(for='gender') Gender:  
+    select#gender.form-control(name='gender')
+      option(value='Female') Female
+      option(value='Male') Male     
+
+  .form-group
+    label Birthday: 
+    br 
+    input#day.dobForm(type='text' placeholder='dd' name='day' maxlength=2)
+    input#mth.dobForm(type='text' placeholder='mm' name='mth' maxlength=2)
+    input#yr.dobForm(type='text' placeholder='yyyy' name='yr' maxlength=4)
+    p lets just assume people will input the correct date for now
+  
+  input.btn.btn-default(type='submit' value='Register')
