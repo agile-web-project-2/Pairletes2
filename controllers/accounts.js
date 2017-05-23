@@ -44,6 +44,7 @@ module.exports.getProfile = function(req,res){
 
 /*Update profile*/
 module.exports.updateProfile = function(req,res){
+  console.log('hi');
   var account = new Account();
   //routed from /profile/:id
   //Found the account
@@ -52,8 +53,7 @@ module.exports.updateProfile = function(req,res){
       res.send(err);
 
     //update
-    //account.gym = req.body.gym;
-    account.gym = "snap";
+    account.gym = req.body.gym;
 
     account.save(function(err){
       if(err){

@@ -89,9 +89,6 @@ router.get('/messages', function(req, res) {
 
 router.get('/profile/:id', ctrlAccount.getProfile);
 
-/***** put UPDATE PROFILE *****/
-router.put('/editprofile', ctrlAccount.updateProfile);
-
 
 /***** EDIT PROFILE *****/
 router.get('/editprofile', function(req, res) {
@@ -100,6 +97,10 @@ router.get('/editprofile', function(req, res) {
       user: req.user
   });
 });
+
+/***** put UPDATE PROFILE *****/
+router.put('/editprofile/:id', ctrlAccount.updateProfile);
+
 
 
 
