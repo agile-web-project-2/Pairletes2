@@ -38,6 +38,10 @@ router.get('/register', function(req, res) {
 /*POST NEW REGISTER-USER*/
 router.post('/register', function(req, res) {
   var bday = req.body.yr + '-' + req.body.mth + '-' + req.body.day;
+
+  //CLean data ready for db store
+
+
   Account.
     register(new Account({
       username : req.body.username,
@@ -82,7 +86,7 @@ router.get('/logout', function(req, res) {
 });
 
 
-/***** MESSAGES *****/
+/***** CHAT *****/
 router.get('/messages', function(req, res) {
       res.render('messages', { user : req.user });
 });
@@ -101,10 +105,13 @@ router.get('/editprofile', function(req, res) {
 /***** POST UPDATE PROFILE *****/
 router.post('/editprofile', ctrlAccount.updateProfile);
 
+/***** GET ABOUT *****/
+router.get('/about', function(req, res) {
+      res.render('about', { user : req.user });
+});
 
 
-
-/***** PERSON LIST ******/
+/***** PERSON LIST ---- Remove later ******/
 router.get('/person', ctrlPerson.personList);
 router.post('/person', ctrlPerson.newPerson);
 /* DELETE person */

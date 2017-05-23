@@ -2,9 +2,9 @@ extends layout
 
 block content
   .container
-    h1= title
+    h2= title
     p Name:
-    h3 #{account.username}
+    h1 #{account.username}
     br
     p Gender: 
     h3 #{account.gender}
@@ -14,6 +14,23 @@ block content
     br
     p Gym: 
     h3 #{account.gym}
+    br
+    p Interests: 
+    h3 #{account.interests[0].interest1}
+    h3 #{account.interests[0].interest2}
+    h3 #{account.interests[0].interest3}
+    br
+    p Address: 
+    if(user)
+      h3 #{account.address[0].street},
+    h3 #{account.address[0].city},
+    //state not in schema yet
+    h3 #{account.address[0].state} state,
+    h3 #{account.address[0].country}    
+
+    br
+    p About Me: 
+    h3 #{account.aboutMe}
     br
     if (user)
       p Email:
