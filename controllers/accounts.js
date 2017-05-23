@@ -44,25 +44,31 @@ module.exports.getProfile = function(req,res){
 
 /*Update profile*/
 module.exports.updateProfile = function(req,res){
+  //Postman: POST, x-www-form-encoded req.body.id
+  //key: id, value: 5923dc317ed18c941dad6cb4
+  //key: gym, value: 'jetts'
+
   var account = new Account();
   //routed from /profile/:id
   //Found the account
-  Account.findById(req.params.id, function(err, account){
+  Account.findById(req.user.id, function(err, account){
     if(err)
       res.send(err);
 
+    //console.log(req.user.id); //coming up undefined
+
     //update
-    //account.gym = req.body.gym;
-    account.gym = "snap";
+    account.gym = req.body.gym;
 
     account.save(function(err){
       if(err){
         res.send(err);
         return;
       }
-
-      res.json(account);
+        res.redirect('/profile/'+req.user.id);
+      //res.json(account);
     })
 
   });
+
 };

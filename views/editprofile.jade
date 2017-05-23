@@ -5,8 +5,9 @@ block content
   
   
   if(user)
+    p#userId #{user.id}
     p #{user.username}
-    form(action="/editprofile" method="put")
+    form(action="/editprofile" method="post")
       //- p Address:
       //- br
       //- input#street.form-control(type='text' value='')
@@ -20,7 +21,7 @@ block content
       //- br  
       p Gym:
       br
-      input#gym.form-control(type='text' value='')
+      input#gym.form-control(type='text' value='' name="gym")
       //- br
       //- p About Me:
       //- textarea#aboutMe.form-control(rows='4', cols='20')

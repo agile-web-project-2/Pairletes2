@@ -33,7 +33,7 @@ html
     a(href='/messages') Messages
     br
     //General links
-    a(href="/person") Person
+    //a(href="/person") Person
     br
     //Not logged in Links
     if (!user)
@@ -45,7 +45,8 @@ html
     if (user)
       br
       a(href="/profile/"+'#{user.id}') Profile
-      a(href="/editprofile") Edit Profile
+      br
+      a(href="/editprofile/"+"#{user.id}") Edit Profile
       p You are currently logged in as #{user.username}
       a(href="/logout") Logout
 
