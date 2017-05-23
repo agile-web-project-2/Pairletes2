@@ -2,29 +2,12 @@ doctype html
 html
   head
     title= title
-    link(rel='stylesheet', href='./public/stylesheets/style.css')
-    link(rel='stylesheet', href='./public/stylesheets/chat.css')
+    link(rel='stylesheet', href='./stylesheets/style.css')
+    link(rel='stylesheet', href='./stylesheets/chat.css')
       
     script(src="/socket.io/socket.io.js")
     script(src="http://code.jquery.com/jquery-1.11.1.js")
-    script.
-        console.log('loading script');
-        var socket = io();
-        console.log('connected');
-
-        function send(){
-          console.log('send');
-          var message = document.getElementById('message');
-          socket.emit('message', message.value);
-          message.value = '';
-        };
-
-        socket.on('message', function(msg){
-          var messages = document.getElementById('messages');
-          var newText = document.createElement('p');
-          newText.innerHTML = msg;
-          messages.appendChild(newText);
-        });
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js")
 
   body
     p Links
@@ -33,7 +16,7 @@ html
     a(href='/messages') Messages
     br
     //General links
-    a(href="/person") Person
+    //a(href="/person") Person
     br
     //Not logged in Links
     if (!user)
@@ -45,7 +28,8 @@ html
     if (user)
       br
       a(href="/profile/"+'#{user.id}') Profile
-      a(href="/editprofile") Edit Profile
+      br
+      a(href="/editprofile/"+"#{user.id}") Edit Profile
       p You are currently logged in as #{user.username}
       a(href="/logout") Logout
 

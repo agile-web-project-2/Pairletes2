@@ -1,11 +1,61 @@
 extends layout
 
 block content
-  .container
-    h1 Messages
-    #chatwindow(width='50%', float='right')
-      #messages
+  script.
+      console.log('loading script');
+      var socket = io();
+      console.log('connected');
       
-      form(action="", id='msgForm', onSubmit='return false;')
-          input(id="message" autocomplete="off")
-          button(type='button', onClick='send();') Send
+      socket.on('connect', function(){
+          socket.emit('addUser', prompt("What is your name?"));
+      });
+
+      socket.on('updateChat', function(username, data){
+          $('#messages').append('<b>' + username + ':</b> ' + data + '<br>');
+      });
+      
+      socket.on('updateRooms', function(rooms, current_room){
+          $('#rooms').empty();
+          $.each(rooms, function(key, value){
+              if(value == current_room){
+                  $('#rooms').append('<div>' + value + '<div>');
+              }
+              else{
+                  $('#rooms').append('<div><a href="#" onclick="switchRoom(\'' + value + '\')">' + value + '</a></div>')
+              }
+          });
+      });
+
+      function switchRoom(room){
+          socket.emit('switchRoom', room);
+      }
+
+      $(function(){
+          $('#dataSend').click(function(){
+              var message = $('#data').val();
+              $('#data').val('');
+              socket.emit('sendChat', message);
+          });
+          
+          $('#data').keypress(function(e){
+              if(e.which == 13){
+                  $(this).blur();
+                  $('#dataSend').focus().click();
+              }
+          });
+      });
+
+
+    
+  .container
+    #chatwindow
+      #contents
+        b ROOMS
+        #rooms
+
+        h1 Messages
+        ul(id="messages")
+    
+        form(action="", id='msgForm', onSubmit='return false;')
+          input(id="data" autocomplete="off")
+          button(type='button', onClick='#dataSend' value="send") Send

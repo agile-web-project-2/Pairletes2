@@ -25,7 +25,7 @@ module.exports.disconnect = function(){
 	console.log('User Disconnected');
 }
 
-module.exports.message = function(msg, io){
+module.exports.message = function(msg){
 	console.log('message recieved!');
 	var message = new Message({
 		user: 'user?',
@@ -45,5 +45,4 @@ module.exports.message = function(msg, io){
 			console.log(data, 'message saved');
 		}
 	});
-	io.emit('message', msg);
 }
