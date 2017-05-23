@@ -45,6 +45,7 @@ router.post('/register', function(req, res) {
   Account.
     register(new Account({
       username : req.body.username,
+      name: req.body.name,
       email: req.body.email,
       gender: req.body.gender,
       birthdate: bday,
