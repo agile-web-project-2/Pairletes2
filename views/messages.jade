@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  .container
+    h1 Messages
+    p blah blah
+    #chatwindow(width='20%', float='right')
+      ul(id="messages")
+        li First Post!
+      
+      form(action="", id='msgForm', onSubmit='return false;')
+          input(id="message" autocomplete="off")
+          button(type='button', onClick='send();') Send

@@ -1,0 +1,28 @@
+extends layout
+
+block content
+  .container
+    h1 Registration Page
+    p Register here
+    br
+    form(action="/register",method="post")
+      label(for='username') Enter Username:
+      input(id='username', type = 'text', name = 'username')
+      br
+      label(for='password') Enter Email
+      input(id='email',type ='email', name='email')
+      br
+      label(for='password') Enter Password
+      input(id='password',type ='password', name='password')
+      br
+      label(for='password') Enter Gender
+      select#gender.form-control(name='gender')
+          option(value='Female') Female
+          option(value='Male') Male  
+      br
+      label Enter Birthday 
+      input#day.dobForm(type='text', placeholder='dd', name='day', maxlength=2)
+      input#mth.dobForm(type='text', placeholder='mm', name='mth', maxlength=2)
+      input#yr.dobForm(type='text', placeholder='yyyy', name='yr', maxlength=4)
+      p lets just assume people will input the correct date for now
+      input(type='submit', value='Register')

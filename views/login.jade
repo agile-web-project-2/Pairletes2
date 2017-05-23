@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  .container
+     h1 Login Page
+     p Login to the simple app here.
+     br
+     form(action="/login",method="post")
+       label(for='username') Enter username:
+       input(id='username', type = 'text', name = 'username')
+       label(for='password') Enter password:
+       input(id='password', type = 'password', name = 'password')
+       input(type='submit', value='Submit')

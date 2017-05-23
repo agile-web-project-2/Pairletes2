@@ -1,0 +1,33 @@
+extends layout
+
+block content
+  h1 Edit profile
+  
+  
+  if(user)
+    p #{user.username}
+    form(action="/editprofile" method="put")
+      //- p Address:
+      //- br
+      //- input#street.form-control(type='text' value='')
+      //- input#city.form-control(type='text' value='')
+      //- input#Country.form-control(type='text' value='')
+      //- br
+      //- p Interests:
+      //- input#interest1.form-control(type='text' value='')
+      //- input#interest2.form-control(type='text' value='')
+      //- input#interest3.form-control(type='text' value='') 
+      //- br  
+      p Gym:
+      br
+      input#gym.form-control(type='text' value='')
+      //- br
+      //- p About Me:
+      //- textarea#aboutMe.form-control(rows='4', cols='20')
+      //- br
+      //- 
+
+      input(type='submit', value='Update')
+    
+  if (!user)
+    p Unauthorised

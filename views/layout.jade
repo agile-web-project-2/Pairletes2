@@ -1,0 +1,55 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+      
+    script(src="/socket.io/socket.io.js")
+    script(src="http://code.jquery.com/jquery-1.11.1.js")
+    script.
+        console.log('loading script');
+        var socket = io();
+        console.log('connected');
+
+        function send(){
+          console.log('send');
+          var message = document.getElementById('message');
+          socket.emit('message', message.value);
+          message.value = '';
+        };
+
+        socket.on('message', function(msg){
+          var messages = document.getElementById('messages');
+          var newText = document.createElement('li');
+          newText.innerHTML = msg;
+          messages.appendChild(newText);
+        });
+
+  body
+    p Links
+    a(href='/') Home
+    br
+    a(href='/messages') Messages
+    br
+    //General links
+    a(href="/person") Person
+    br
+    //Not logged in Links
+    if (!user)
+      a(href="/login") Login
+      br
+      a(href="/register") Register
+      
+    //Logged in Links
+    if (user)
+      br
+      a(href="/profile/"+'#{user.id}') Profile
+      a(href="/editprofile") Edit Profile
+      p You are currently logged in as #{user.username}
+      a(href="/logout") Logout
+
+
+    #content(width='50%', float='left')    
+      block content
+      
+    
