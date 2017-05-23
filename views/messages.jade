@@ -3,10 +3,8 @@ extends layout
 block content
   .container
     h1 Messages
-    p blah blah
-    #chatwindow(width='20%', float='right')
-      ul(id="messages")
-        li First Post!
+    #chatwindow(width='50%', float='right')
+      #messages
       
       form(action="", id='msgForm', onSubmit='return false;')
           input(id="message" autocomplete="off")

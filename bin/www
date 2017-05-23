@@ -7,7 +7,6 @@
 var app = require('../app');
 var debug = require('debug')('SimpleApp:server');
 var http = require('http');
-//add
 var socket = require('../socket');
 
 
@@ -29,9 +28,7 @@ var server = http.createServer(app);
  */
 
 server.listen(port);
-//Add
 socket.attach(server);
-//Add done
 server.on('error', onError);
 server.on('listening', onListening);
 

@@ -30,4 +30,4 @@ process.on('SIGTERM', function() {
 });
 
 require('./person.js');
-require('./chat.js');
+require('./message.js');

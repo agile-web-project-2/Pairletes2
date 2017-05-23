@@ -2,7 +2,8 @@ doctype html
 html
   head
     title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='./public/stylesheets/style.css')
+    link(rel='stylesheet', href='./public/stylesheets/chat.css')
       
     script(src="/socket.io/socket.io.js")
     script(src="http://code.jquery.com/jquery-1.11.1.js")
@@ -20,7 +21,7 @@ html
 
         socket.on('message', function(msg){
           var messages = document.getElementById('messages');
-          var newText = document.createElement('li');
+          var newText = document.createElement('p');
           newText.innerHTML = msg;
           messages.appendChild(newText);
         });

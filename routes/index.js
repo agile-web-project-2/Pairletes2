@@ -84,7 +84,7 @@ router.get('/logout', function(req, res) {
 
 /***** MESSAGES *****/
 router.get('/messages', function(req, res) {
-      res.render('messages', { user : req.user });
+      res.render('messages');
 });
 
 router.get('/profile/:id', ctrlAccount.getProfile);
