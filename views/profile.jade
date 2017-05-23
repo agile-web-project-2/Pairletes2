@@ -6,9 +6,6 @@ block content
     p Name:
     h3 #{account.username}
     br
-    p Email:
-    h3 #{account.email}
-    br
     p Gender: 
     h3 #{account.gender}
     br
@@ -19,74 +16,10 @@ block content
     h3 #{account.gym}
     br
     if (user)
+      p Email:
+      h3 #{account.email}
+      br
       a(href="/editprofile")
         button.btn.btn-default(type='button') Edit profile
 
       
-      
-    
-        //- 
-        //- 
-        //- 
-        //- script.      
-        //-   //Populate with INTEREST data from db
-        //-   //Might change input text to dropdown box with pre-defined values later
-        //-   var interest1Var = "#{interest1}"; //unique var
-        //-   if (interest1Var == ''){
-        //-     document.getElementById('interest1').placeholder = "Enter an interest e.g. Gym";
-        //-   } else {
-        //-     document.getElementById('interest1').value = interest1Var;
-        //-   }
-        //-   
-        //-   var interest2Var = "#{interest2}"; //unique var
-        //-   if (interest2Var == ''){
-        //-     document.getElementById('interest2').placeholder = "Enter an interest e.g. Running";
-        //-   } else {
-        //-     document.getElementById('interest2').value = interest2Var;
-        //-   }
-        //-   
-        //-   var interest3Var = "#{interest1}"; //unique var
-        //-   if (interest3Var == ''){
-        //-     document.getElementById('interest3').placeholder = "Enter an interest e.g. Tennis";
-        //-   } else {
-        //-     document.getElementById('interest3').value = interest3Var;
-        //-   }
-        //-   
-        //-   //Populate with GYM data from db
-        //-   var gymVar = "#{user.gym}";
-        //-   if (gymVar == ''){
-        //-     document.getElementById('gym').placeholder = "Enter a gym";
-        //-   } else {
-        //-     document.getElementById('gym').value = gymVar;
-        //-   }
-        //-   
-        //-   //Populate with DESCRIPTION data from db
-        //-   var aboutMeVar = "#{user.aboutMe}";
-        //-   if (aboutMeVar == ''){
-        //-     document.getElementById('aboutMe').placeholder = "Enter a description";
-        //-   } else {
-        //-     document.getElementById('aboutMe').value = aboutMeVar;
-        //-   }
-        //-   
-        //-   //Populate with ADDRESS data from db
-        //-   var streetVar = "#{streetAddress}"; //use unique var from loginregister.js GET request
-        //-   if (streetVar == ''){
-        //-     document.getElementById('street').placeholder = "Street";
-        //-   } else {
-        //-     document.getElementById('street').value = streetVar;
-        //-   }
-        //- 
-        //-   var cityVar = "#{cityAddress}";
-        //-   if (cityVar == ''){
-        //-     document.getElementById('city').placeholder = "City";
-        //-   } else {
-        //-     document.getElementById('city').value = cityVar;
-        //-   }
-        //-   
-        //-   var countrytVar = "#{countryAddress}";
-        //-   if (countrytVar == ''){
-        //-     document.getElementById('Country').placeholder = "Country";
-        //-   } else {
-        //-     document.getElementById('Country').value = countrytVar;
-        //-   }
-        //-   
