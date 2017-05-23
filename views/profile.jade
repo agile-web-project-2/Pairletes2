@@ -1,8 +1,8 @@
 extends layout
 
 block content
-  .container
-    h2= title
+  h2= title
+  .col-md-6  
     p Name:
     h1 #{account.username}
     br
@@ -20,6 +20,8 @@ block content
     h3 #{account.interests[0].interest2}
     h3 #{account.interests[0].interest3}
     br
+    
+  .col-md-6
     p Address: 
     if(user)
       h3 #{account.address[0].street},
@@ -38,5 +40,4 @@ block content
       br
       a(href="/editprofile")
         button.btn.btn-default(type='button') Edit profile
-
       
