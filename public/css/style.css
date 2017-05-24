@@ -109,6 +109,7 @@ body {
 
 @media (min-width: 768px) {
   .masthead-brand {
+     margin: 0;
     float: left;
   }
   .masthead-nav {
@@ -243,4 +244,14 @@ body {
 
 button {
   color: black;
+}
+
+
+.profileContainer {
+  margin-left: auto;
+}
+
+.profileContainer .col-sm-8 {
+  font-size: 1.1em;
+  text-transform: uppercase;
 }

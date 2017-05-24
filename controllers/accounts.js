@@ -6,7 +6,7 @@ require('../models/db');
 var mongoose = require('mongoose');
 var Account = mongoose.model('Account');
 
-/*get profile*/
+/*GET profile*/
 module.exports.getProfile = function(req,res){
   var account = new Account();
   //routed from /profile/:id
@@ -31,34 +31,71 @@ module.exports.getProfile = function(req,res){
     }
     x = year + '-' + month + '-' + dt;
 
+    //Check if gym returns a string or object
+    if (typeof account.gym != 'string'){
+      var gymVar = " ";
+    } else {
+      var gymVar = account.gym;
+    }
+
+    //Check if interests returns a string or object
+    if (typeof account.interests[0] == 'undefined'){
+      var intr = " ";
+    } else {
+      var intr = account.interests[0];
+    }
+
+    //Check if address returns a string or object
+    if (typeof account.address[0] == 'undefined'){
+      var addr = " ";
+    } else {
+      var addr = account.address[0];
+    }
+
+    //Check if aboutMe returns a string or object
+    if (typeof account.aboutMe == 'undefined'){
+      var about = " ";
+    } else {
+      var about = account.aboutMe;
+    }
 
     res.render('profile.jade', {
-          user: req.user,
-          title: 'Profile',
-          account: account,
-          birthdate: x
+        user: req.user,
+        title: 'Profile',
+        account: account,
+        birthdate: x,
+        gym: gymVar,
+        interest: intr,
+        address: addr,
+        aboutMe: about
     });
 
   });
 };
 
-/*Update profile*/
-module.exports.updateProfile = function(req,res){
-  //Postman: POST, x-www-form-encoded req.body.id
-  //key: id, value: 5923dc317ed18c941dad6cb4
-  //key: gym, value: 'jetts'
 
+/*UPDATE profile*/
+module.exports.updateProfile = function(req,res){
+  //New instance of account object
   var account = new Account();
   //routed from /profile/:id
-  //Found the account
+
+  //Find the account
   Account.findById(req.user.id, function(err, account){
+    //Error handler
     if(err)
       res.send(err);
 
-    //console.log(req.user.id); //coming up undefined
-
-    //update
+    //UPDATE
+    account.address = {"street": req.body.street,
+      "city": req.body.city,
+      "state": req.body.state,
+      "country": req.body.country};
+    account.interests = {"interest1": req.body.interest1,
+      "interest2": req.body.interest2,
+      "interest3": req.body.interest3};
     account.gym = req.body.gym;
+    account.aboutMe = req.body.about;
 
     account.save(function(err){
       if(err){

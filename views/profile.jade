@@ -2,42 +2,70 @@ extends layout
 
 block content
   h2= title
-  .col-md-6  
-    p Name:
-    h1 #{account.username}
-    br
-    p Gender: 
-    h3 #{account.gender}
-    br
-    p Birthday: 
-    h3 #{birthdate}
-    br
-    p Gym: 
-    h3 #{account.gym}
-    br
-    p Interests: 
-    h3 #{account.interests[0].interest1}
-    h3 #{account.interests[0].interest2}
-    h3 #{account.interests[0].interest3}
-    br
-    
-  .col-md-6
-    p Address: 
-    if(user)
-      h3 #{account.address[0].street},
-    h3 #{account.address[0].city},
-    //state not in schema yet
-    h3 #{account.address[0].state} state,
-    h3 #{account.address[0].country}    
-
-    br
-    p About Me: 
-    h3 #{account.aboutMe}
-    br
-    if (user)
-      p Email:
-      h3 #{account.email}
+  br
+  
+  .profileContainer
+    .col-sm-4
+      p Username:
+    .col-sm-8
+      p #{account.username}
       br
-      a(href="/editprofile")
-        button.btn.btn-default(type='button') Edit profile
+  .profileContainer
+    .col-sm-4
+      p Name:
+    .col-sm-8
+      p #{account.name}
+      br
+  .profileContainer
+    .col-sm-4
+      p Gender: 
+    .col-sm-8
+      p #{account.gender}
+      br
+  .profileContainer
+    .col-sm-4
+      p Birthday: 
+    .col-sm-8
+      p #{birthdate}
+      br
+  .profileContainer
+    .col-sm-4
+      p Gym: 
+    .col-sm-8
+      p #{gym}
+      br
+  .profileContainer
+    .col-sm-4
+      p Interests: 
+    .col-sm-8
+      p #{interest.interest1}
+      p #{interest.interest2}
+      p #{interest.interest3}
+      br
+  .profileContainer
+    .col-sm-4
+      p Address: 
+    .col-sm-8
+      //hide street from public
+      if(user)
+        p #{address.street}
+      p #{address.city}
+      //state not in schema yet; delete string when it is
+      p #{address.state} state, #{address.country}  
+      br 
+  .profileContainer
+    .col-sm-4
+      p About Me: 
+    .col-sm-8
+      p #{aboutMe}
+      br
+  .profileContainer
+    if (user)
+      .col-sm-4
+        p Email:
+      .col-sm-8
+        p #{account.email}
+        br
+        a(href="/editprofile")
+          button.btn.btn-default(type='button') Edit profile
       
