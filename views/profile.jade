@@ -5,11 +5,12 @@ block content
   br
   
   .profileContainer
-    .col-sm-4
-      p Username:
-    .col-sm-8
-      p #{account.username}
-      br
+    if (user)
+      .col-sm-4
+        p Username:
+      .col-sm-8
+        p #{account.username}
+        br
   .profileContainer
     .col-sm-4
       p Name:
@@ -32,7 +33,7 @@ block content
     .col-sm-4
       p Gym: 
     .col-sm-8
-      p I go to #{gym}
+      p #{gym}
       br
   .profileContainer
     .col-sm-4
