@@ -10,7 +10,7 @@ var Account = new Schema({
     gender: String,
     birthdate: Date,
     gym: {},
-    address: [{street: {}, city: {}, country: {}}],
+    address: [{street: {}, city: {}, state: {}, country: {}}],
     interests: [{interest1: {}, interest2: {}, interest3: {}}],
     aboutMe: {}
 }, { minimize: false });
