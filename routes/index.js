@@ -41,7 +41,6 @@ router.post('/register', function(req, res) {
 
   //CLean data ready for db store
 
-
   Account.
     register(new Account({
       username : req.body.username,
@@ -69,6 +68,7 @@ router.post('/register', function(req, res) {
  });
 });
 
+/***** POST LOGIN *****/
 router.post('/login', passport.authenticate('local'), function(req, res) {
       res.redirect('/profile/'+req.user.id);
 });
