@@ -1,0 +1,28 @@
+extends layout
+
+block content
+   h1 Find Your Fitness Match
+   .frame
+     br
+     form(action="",method="post")
+       .form-group
+         label(for='activity') Find a partner for this activity:  
+         select#activity.form-control(name='activity')
+          option(value='bootcamp') Bootcamp  
+          option(value='cycling') Cycling
+          option(value='gym') Gym
+          option(value='rowing') Rowing
+          option(value='running') Running
+          option(value='triathalon') Triathalon  
+        
+         
+        //Or should we just match by activity and location only?
+       .form-group
+         label(for='gender') Gender:  
+         select#gender.form-control(name='gender')
+          option(value='Any') Any
+          option(value='Female') Female
+          option(value='Male') Male  
+          
+       |  
+       input.btn.btn-default(type='submit' value='Find a Match!')
