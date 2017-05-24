@@ -41,31 +41,35 @@ router.post('/register', function(req, res) {
 
   //CLean data ready for db store
 
+  // register account through passport local
   Account.
     register(new Account({
       username : req.body.username,
       name: req.body.name,
       email: req.body.email,
       gender: req.body.gender,
-      birthdate: bday,
-      gym: {}}),
-       req.body.password,
- function(err, account) {
-   if (err) {
-     console.log('There was an error while registering the email!', err);
-     console.log('account: ' + account);
-    //  sendJsonResponse(res, 400, err);
-     return res.render('register', { account : account });
-   } else {
-     console.log('The email is registered!');
-    //  sendJsonResponse(res, 201, account);
-     res.redirect('/login');
-   };
+      birthdate: bday
+    }), req.body.password,
+      function(err, account) {
+        if (err) {
+          console.log('There was an error while registering the email!', err);
+          console.log('account: ' + account);
+         //  sendJsonResponse(res, 400, err);
+          return res.render('register', { account : account });
+        } else {
+          console.log('The email is registered!');
+         //  sendJsonResponse(res, 201, account);
+          // res.redirect('/login');
 
-   passport.authenticate('local')(req, res, function () {
-     res.redirect('/login');
-     });
- });
+          // loggin and redirect the user to the profile page after registration.
+          passport.authenticate('local')(req, res, function () {
+            res.redirect('/profile/'+req.user.id);
+          });
+        };
+
+        
+
+      });
 });
 
 /***** POST LOGIN *****/

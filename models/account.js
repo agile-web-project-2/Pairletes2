@@ -9,10 +9,10 @@ var Account = new Schema({
     password: String,
     gender: String,
     birthdate: Date,
-    gym: {},
-    address: [{street: {}, city: {}, state: {}, country: {}}],
-    interests: [{interest1: {}, interest2: {}, interest3: {}}],
-    aboutMe: {}
+    gym: String,
+    address: [{street: String, city: String, country: String}],
+    interests: [{interest1: String, interest2: String, interest3: String}],
+    aboutMe: String
 }, { minimize: false });
 
 Account.plugin(passportLocalMongoose);
