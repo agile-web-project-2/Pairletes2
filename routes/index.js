@@ -61,9 +61,9 @@ router.post('/register', function(req, res) {
          //  sendJsonResponse(res, 201, account);
           // res.redirect('/login');
 
-          // redirect and loggin the user automatically after registration.
+          // loggin and redirect the user to the profile page after registration.
           passport.authenticate('local')(req, res, function () {
-            res.redirect('/login');
+            res.redirect('/profile/'+req.user.id);
           });
         };
 
