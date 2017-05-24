@@ -23,14 +23,14 @@ block content
           input#city.form-control(type='text' value='' name='city' placeholder="City")
         .form-group
          select#state.form-control(name='state')
-          option(value='') N/A
-          option(value='act') ACT
-          option(value='nsw') NSW
-          option(value='qld') QLD  
-          option(value='sa') SA
-          option(value='tas') TAS
-          option(value='vic') VIC
-          option(value='wa') WA
+          option(value='') 
+          option(value='ACT') ACT
+          option(value='NSW') NSW
+          option(value='QLD') QLD  
+          option(value='SA') SA
+          option(value='TAS') TAS
+          option(value='VIC') VIC
+          option(value='WA') WA
         .form-group
           select#country.form-control(name='country')
            option(value='australia') AUSTRALIA
@@ -50,7 +50,7 @@ block content
             option(value='running') Running
             option(value='triathalon') Triathalon 
          .form-group
-           select#interest2.form-control(name='interest3')
+           select#interest2.form-control(name='interest2')
              option(value='') 
              option(value='bootcamp') Bootcamp  
              option(value='cycling') Cycling
@@ -59,7 +59,7 @@ block content
              option(value='running') Running
              option(value='triathalon') Triathalon 
         .form-group
-          select#interest1.form-control(name='interest1')
+          select#interest3.form-control(name='interest3')
             option(value='') 
             option(value='bootcamp') Bootcamp  
             option(value='cycling') Cycling
@@ -67,91 +67,91 @@ block content
             option(value='rowing') Rowing
             option(value='running') Running
             option(value='triathalon') Triathalon 
-        //- input#interest1.form-control(type='text' value='' name='interest1' placeholder="e.g. Gym")
-        //- input#interest2.form-control(type='text' value='' name='interest2' placeholder="e.g. Swimming")
-        //- input#interest3.form-control(type='text' value='' name='interest3' placeholder="e.g. Marathons") 
         br  
         p Gym:
         br
-        input#gym.form-control(type='text' value='', name='gym' placeholder="e.g. Jetts")
+        input#gym.form-control(type='text' value='', name='gym')
         br
         p About Me:
         textarea#aboutMe.form-control(rows='4', cols='20', name='about' placeholder="Write a description")
         br
 
-      //- NEED TO DO AN POST REQ UPDATE OF USER'S PROFILE ON SERVER SIDE
       input.btn.btn-default(type='submit', value='Update')
     
     
   if (!user)
     p Unauthorised
 
-  //- 
-  //- script.
-  //-   //Populate with INTEREST data from db
-  //-   var interest1Var = "#{interest.interest1}"; //unique var
-  //-   if (interest1Var == ''){
-  //-     document.getElementById('interest1').placeholder = "Enter an interest e.g. Gym";
-  //-   } else {
-  //-     document.getElementById('interest1').value = interest1Var;
-  //-   }
-  //-   
-  //-   var interest2Var = "#{interest.interest2}"; //unique var
-  //-   if (interest2Var == ''){
-  //-     document.getElementById('interest2').placeholder = "Enter an interest e.g. Running";
-  //-   } else {
-  //-     document.getElementById('interest2').value = interest2Var;
-  //-   }
-  //-   
-  //-   var interest3Var = "#{interest.interest3}"; //unique var
-  //-   if (interest3Var == ''){
-  //-     document.getElementById('interest3').placeholder = "Enter an interest e.g. Tennis";
-  //-   } else {
-  //-     document.getElementById('interest3').value = interest3Var;
-  //-   }
-  //-   
-  //-   //Populate with GYM data from db
-  //-   var gymVar = "#{gym}";
-  //-   if (gymVar == ''){
-  //-     document.getElementById('gym').placeholder = "Enter a gym";
-  //-   } else {
-  //-     document.getElementById('gym').value = gymVar;
-  //-   }
-  //-   
-  //-   //Populate with DESCRIPTION data from db
-  //-   var aboutMeVar = "#{aboutMe}";
-  //-   if (aboutMeVar == ''){
-  //-     document.getElementById('aboutMe').placeholder = "Enter a description";
-  //-   } else {
-  //-     document.getElementById('aboutMe').value = aboutMeVar;
-  //-   }
-  //-   
-  //-   //Populate with ADDRESS data from db
-  //-   var streetVar = "#{address.street}"; //use unique var from loginregister.js GET request
-  //-   if (streetVar == ''){
-  //-     document.getElementById('street').placeholder = "Street";
-  //-   } else {
-  //-     document.getElementById('street').value = streetVar;
-  //-   }
-  //- 
-  //-   var cityVar = "#{address.city}";
-  //-   if (cityVar == ''){
-  //-     document.getElementById('city').placeholder = "City";
-  //-   } else {
-  //-     document.getElementById('city').value = cityVar;
-  //-   }
-  //-   
-  //-   var stateVar = "#{address.city}";
-  //-   if (stateVar == ''){
-  //-     document.getElementById('state').placeholder = "State";
-  //-   } else {
-  //-     document.getElementById('state').value = stateVar;
-  //-   }
-  //-   
-  //-   var countrytVar = "#{address.country}";
-  //-   if (countrytVar == ''){
-  //-     document.getElementById('Country').placeholder = "Country";
-  //-   } else {
-  //-     document.getElementById('Country').value = countrytVar;
-  //-   }
-  //-   
+  
+  script.
+    //Populate with INTEREST data from db
+    var interest1Var = "#{interest.interest1}";
+    var interest2Var = "#{interest.interest2}";
+    var interest3Var = "#{interest.interest3}";
+    var stateVar = "#{address.state}";
+    
+    for(i=0; i<=6; i++){
+        var i1 = document.getElementById("interest1").options[i].text; //option value
+        var i2 = document.getElementById("interest2").options[i].text;
+        var i3 = document.getElementById("interest3").options[i].text;
+        
+        if (i1.toLowerCase() == interest1Var){ //check to see if it's the same
+          document.getElementById("interest1").selectedIndex = i;
+          continue;
+        };
+        
+        if (i2.toLowerCase() == interest2Var){ //check to see if it's the same
+          document.getElementById("interest2").selectedIndex = i;
+          continue;
+        };
+        
+        if (i3.toLowerCase() == interest3Var){ //check to see if it's the same
+          document.getElementById("interest3").selectedIndex = i;
+          continue;
+        };
+        
+  
+      }; 
+      
+    for(i=0; i<=7; i++){
+        var st = document.getElementById("state").options[i].text;
+        
+        if (st == stateVar){ //check to see if it's the same
+          document.getElementById("state").selectedIndex = i;
+          continue;
+        };
+      }; 
+      
+       
+      
+    //Populate with GYM data from db
+    var gymVar = "#{gym}";
+    if (typeof gymVar != 'string'){
+      document.getElementById('gym').placeholder = "Enter a gym e.g. Jetts";
+    } else {
+      document.getElementById('gym').value = gymVar;
+    }
+    
+    //Populate with DESCRIPTION data from db
+    var aboutMeVar = "#{aboutMe}";
+    if (aboutMeVar == ''){
+      document.getElementById('aboutMe').placeholder = "Enter a description";
+    } else {
+      document.getElementById('aboutMe').value = aboutMeVar;
+    }
+    
+    //Populate with ADDRESS data from db
+    var streetVar = "#{address.street}"; //use unique var from loginregister.js GET request
+    if (streetVar == ''){
+      document.getElementById('street').placeholder = "Street";
+    } else {
+      document.getElementById('street').value = streetVar;
+    }
+    
+    var cityVar = "#{address.city}";
+    if (cityVar == ''){
+      document.getElementById('city').placeholder = "City";
+    } else {
+      document.getElementById('city').value = cityVar;
+    }
+    

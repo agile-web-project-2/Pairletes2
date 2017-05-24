@@ -39,7 +39,7 @@ module.exports.getProfile = function(req,res){
     }
 
     //Check if interests returns a string or object
-    if (typeof account.interests[0] == 'undefined'){
+    if (typeof account.interests[0] == 'undefined' || typeof account.interests[0] == 'null'){
       var intr = " ";
     } else {
       var intr = account.interests[0];
@@ -91,9 +91,7 @@ module.exports.updateProfile = function(req,res){
       "city": req.body.city,
       "state": req.body.state,
       "country": req.body.country};
-    account.interests = {"interest1": req.body.interest1,
-      "interest2": req.body.interest2,
-      "interest3": req.body.interest3};
+    account.interests = {"interest1": req.body.interest1, "interest2": req.body.interest2, "interest3": req.body.interest3};
     account.gym = req.body.gym;
     account.aboutMe = req.body.about;
 
