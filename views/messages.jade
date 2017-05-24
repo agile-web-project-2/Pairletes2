@@ -11,7 +11,7 @@ block content
       });
 
       socket.on('updateChat', function(username, data){
-          $('#messages').append('<b>' + username + ':</b> ' + data + '<br>');
+          $('#messages').append('<li><b>' + username + ':</b> ' + data + '</li>');
       });
       
       socket.on('updateRooms', function(rooms, current_room){
@@ -57,4 +57,7 @@ block content
     
         form(action="", id='msgForm', onSubmit='return false;')
           input.form-control(id="data" autocomplete="off")
-          button.btn.btn-default(type='button', onClick='#dataSend' value="send") Send
+          br
+          br
+          br
+          button.btn.btn-default(type='button', id='dataSend' value="send") Send

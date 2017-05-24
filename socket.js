@@ -26,7 +26,7 @@ io.on('connection', function(socket){
     });
 
     socket.on('sendChat', function(msg){
-    	socket.in(socket.room).emit('updateChat', socket.username, msg);
+    	socket.to(socket.room).emit('updateChat', socket.username, msg);
     });
 
     socket.on('switchRoom', function(newroom){
