@@ -24,13 +24,13 @@ var sendJsonResponse = function(res, status, content) {
     res.json(content);
 };
 
-/***** HOMEPAGE ****/
+/***** GET HOMEPAGE ****/
 router.get('/', function(req, res){
   res.render('index', { user : req.user });
 });
 
 
-/***** REGISTER ****/
+/***** GET REGISTER ****/
 router.get('/register', function(req, res) {
       res.render('register', { });
 });
@@ -74,20 +74,20 @@ router.post('/login', passport.authenticate('local'), function(req, res) {
 });
 
 
-/***** LOGIN *****/
+/***** GET LOGIN *****/
 router.get('/login', function(req, res) {
       res.render('login', { user : req.user });
 });
 
 
-/***** LOGOUT *****/
+/***** GET LOGOUT *****/
 router.get('/logout', function(req, res) {
       req.logout();
           res.redirect('/');
 });
 
 
-/***** CHAT *****/
+/***** GET CHAT *****/
 router.get('/messages', function(req, res) {
       res.render('messages');
 });
@@ -95,10 +95,10 @@ router.get('/messages', function(req, res) {
 router.get('/profile/:id', ctrlAccount.getProfile);
 
 
-/***** EDIT PROFILE *****/
+/***** GET EDIT PROFILE *****/
 router.get('/editprofile', function(req, res) {
   var account = new Account();
-  //TO DISPLAY IN INPUT TEXTBOXES unused at the moment
+  //TO DISPLAY IN INPUT TEXTBOXES ------unused at the moment
   //Check if gym returns a string or object
   if (typeof account.gym != 'string'){
     var gymVar = " ";
@@ -141,17 +141,28 @@ router.get('/editprofile', function(req, res) {
 /***** POST UPDATE PROFILE *****/
 router.post('/editprofile', ctrlAccount.updateProfile);
 
+
+
 /***** GET ABOUT *****/
 router.get('/about', function(req, res) {
       res.render('about', { user : req.user });
 });
 
 
-/***** PERSON LIST ---- Remove later ******/
-router.get('/person', ctrlPerson.personList);
-router.post('/person', ctrlPerson.newPerson);
-/* DELETE person */
-router.get('/delete/:id', ctrlPerson.deletePerson);
+
+/***** GET FINDMATCH *****/
+router.get('/findmatch', function(req, res) {
+      res.render('findmatch', { user : req.user });
+});
+
+
+
+
+// /***** PERSON LIST ---- Remove later ******/
+// router.get('/person', ctrlPerson.personList);
+// router.post('/person', ctrlPerson.newPerson);
+// /* DELETE person */
+// router.get('/delete/:id', ctrlPerson.deletePerson);
 
 
 module.exports = router;

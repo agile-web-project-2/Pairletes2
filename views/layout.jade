@@ -44,9 +44,11 @@ html(lang='en')
                           a(href="/register") Register
                       
                       //LOGGED IN
-                      if (user)
+                      if (user)                      
                         li 
                           a(href="/profile/"+'#{user.id}') Profile
+                        li.active
+                          a(href="/findmatch") Find A Match!
                         li.active
                           a(href="/logout") Logout
                         
