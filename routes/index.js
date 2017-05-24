@@ -74,7 +74,7 @@ router.post('/register', function(req, res) {
 
 /***** POST LOGIN *****/
 router.post('/login', passport.authenticate('local'), function(req, res) {
-      res.redirect('/profile/'+req.user.id);
+      res.redirect('/findmatch');
 });
 
 
@@ -97,6 +97,7 @@ router.get('/messages', function(req, res) {
 });
 
 router.get('/profile/:id', ctrlAccount.getProfile);
+//router.get('/profile/:username', ctrlAccount.getProfile);
 
 
 /***** GET EDIT PROFILE *****/
@@ -159,6 +160,8 @@ router.get('/findmatch', function(req, res) {
       res.render('findmatch', { user : req.user });
 });
 
+/**** POST FINDMATCH *****/
+router.post('/findmatch', ctrlAccount.findmatchResults);
 
 
 

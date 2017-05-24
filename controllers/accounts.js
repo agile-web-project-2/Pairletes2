@@ -12,64 +12,75 @@ module.exports.getProfile = function(req,res){
   //routed from /profile/:id
   //Found the account
   Account.findById(req.params.id, function(err, account){
+  //Account.findOne({username: 'req.params.username'}, function(err, account){  
     if(err){
-      res.send(err);
-    }
-
-    //res.json(account);
-    var x = account.birthdate;
-    var year = x.getFullYear();
-    var month = x.getMonth()+1;
-    var dt = x.getDate();
-
-    if (dt < 10) {
-    dt = '0' + dt;
-    }
-
-    if (month < 10) {
-    month = '0' + month;
-    }
-    x = year + '-' + month + '-' + dt;
-
-    //Check if gym returns a string or object
-    if (typeof account.gym != 'string'){
-      var gymVar = " ";
+      console.log(err);
+      res.render('error.jade', {
+          message: "Whooops, this user doesn't seem to be on Pairletes"
+      });
     } else {
-      var gymVar = account.gym;
-    }
 
-    //Check if interests returns a string or object
-    if (typeof account.interests[0] == 'undefined'){
-      var intr = " ";
-    } else {
-      var intr = account.interests[0];
-    }
+      //res.json(account);
+      if (account) {
+        var x = account.birthdate;
+        var year = x.getFullYear();
+        var month = x.getMonth()+1;
+        var dt = x.getDate();
+      
 
-    //Check if address returns a string or object
-    if (typeof account.address[0] == 'undefined'){
-      var addr = " ";
-    } else {
-      var addr = account.address[0];
-    }
+        if (dt < 10) {
+        dt = '0' + dt;
+        }
 
-    //Check if aboutMe returns a string or object
-    if (typeof account.aboutMe == 'undefined'){
-      var about = " ";
-    } else {
-      var about = account.aboutMe;
-    }
+        if (month < 10) {
+        month = '0' + month;
+        }
+        x = year + '-' + month + '-' + dt;
 
-    res.render('profile.jade', {
-        user: req.user,
-        title: 'Profile',
-        account: account,
-        birthdate: x,
-        gym: gymVar,
-        interest: intr,
-        address: addr,
-        aboutMe: about
-    });
+        //Check if gym returns a string or object
+        if (typeof account.gym != 'string'){
+          var gymVar = " ";
+        } else {
+          var gymVar = account.gym;
+        }
 
+        //Check if interests returns a string or object
+        if (typeof account.interests[0] == 'undefined'){
+          var intr = " ";
+        } else {
+          var intr = account.interests[0];
+        }
+
+        //Check if address returns a string or object
+        if (typeof account.address[0] == 'undefined'){
+          var addr = " ";
+        } else {
+          var addr = account.address[0];
+        }
+
+        //Check if aboutMe returns a string or object
+        if (typeof account.aboutMe == 'undefined'){
+          var about = " ";
+        } else {
+          var about = account.aboutMe;
+        }
+
+        res.render('profile.jade', {
+            user: req.user,
+            title: 'Profile',
+            account: account,
+            birthdate: x,
+            gym: gymVar,
+            interest: intr,
+            address: addr,
+            aboutMe: about
+        });
+      } else {
+        res.render('error.jade', {
+          message: "Whooops, this user doesn't seem to be on Pairletes"
+        });
+      };
+    };
   });
 };
 
@@ -107,5 +118,19 @@ module.exports.updateProfile = function(req,res){
     })
 
   });
+
+};
+
+/*FIND MATCH*/
+module.exports.findmatchResults = function(req,res){
+    matchResults = {
+      username: "mattyrat"
+    };
+
+    res.render('findmatchResults.jade', {
+      matchResults: matchResults
+    });
+
+      
 
 };
