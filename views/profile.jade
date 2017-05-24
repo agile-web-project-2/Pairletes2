@@ -5,11 +5,12 @@ block content
   br
   
   .profileContainer
-    .col-sm-4
-      p Username:
-    .col-sm-8
-      p #{account.username}
-      br
+    if (user)
+      .col-sm-4
+        p Username:
+      .col-sm-8
+        p #{account.username}
+        br
   .profileContainer
     .col-sm-4
       p Name:
@@ -38,9 +39,9 @@ block content
     .col-sm-4
       p Interests: 
     .col-sm-8
-      p #{interest.interest1}
-      p #{interest.interest2}
-      p #{interest.interest3}
+      p 1. #{interest.interest1}
+      p 2. #{interest.interest2}
+      p 3. #{interest.interest3}
       br
   .profileContainer
     .col-sm-4
@@ -48,10 +49,9 @@ block content
     .col-sm-8
       //hide street from public
       if(user)
-        p #{address.street}
-      p #{address.city}
-      //state not in schema yet; delete string when it is
-      p #{address.state}
+        p Street: #{address.street}
+      p City/Suburb: #{address.city}
+      p State: #{address.state}
       p #{address.country}  
       br 
   .profileContainer

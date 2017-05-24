@@ -21,16 +21,17 @@ html(lang='en')
     .site-wrapper
           .site-wrapper-inner
             .cover-container
-              .masthead.clearfix
-                if (user)
-                  .login-status
-                  p Welcome, #{user.username}!
+              .masthead.clearfix                
                 .inner
                   h3.masthead-brand.logo 
                     a.logo(href="/") Pairletes              
                         
                   nav
                     ul.nav.masthead-nav
+                      li
+                        if (user)
+                          .logo-status
+                            p Welcome, #{user.username}!
                       li
                         a(href="/about") About
                       li

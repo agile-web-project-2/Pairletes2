@@ -71,6 +71,7 @@ body {
   font-family: 'Lobster Two', cursive;
   font-size: 1.5em;
   color: #F7E326;
+  margin: 10px;
 }
 
 .masthead-brand {
@@ -254,4 +255,23 @@ button {
 .profileContainer .col-sm-8 {
   font-size: 1.1em;
   text-transform: uppercase;
+  font-weight: bold;
+  color: #333;
+  text-decoration: none;
+}
+
+.inner{
+  margin: 10px;
+}
+
+.profileContainer .col-sm-8 p{
+  background-color: rgba(247, 227, 38, 0.8);
+  padding: 3px;
+  margin-bottom: 3px;
+  border-radius: 5px;
+  text-shadow: none;
+}
+
+.logo-status {
+  color: rgba(247, 227, 38, 1);
 }

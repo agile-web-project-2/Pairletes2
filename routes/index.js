@@ -67,7 +67,7 @@ router.post('/register', function(req, res) {
           });
         };
 
-        
+
 
       });
 });
@@ -93,7 +93,7 @@ router.get('/logout', function(req, res) {
 
 /***** GET CHAT *****/
 router.get('/messages', function(req, res) {
-      res.render('messages');
+      res.render('messages', { user : req.user });
 });
 
 router.get('/profile/:id', ctrlAccount.getProfile);
@@ -101,41 +101,45 @@ router.get('/profile/:id', ctrlAccount.getProfile);
 
 
 /***** GET EDIT PROFILE *****/
+// router.get('/editprofile', ctrlAccount.getEditProfile);
 router.get('/editprofile', function(req, res) {
-  var account = new Account();
+  //var account = new Account();
   //TO DISPLAY IN INPUT TEXTBOXES ------unused at the moment
   //Check if gym returns a string or object
-  if (typeof account.gym != 'string'){
+  // Account.findById(req.params.id, function(err, account){
+  //
+  // });
+  if (typeof req.user.gym != 'string' || typeof req.user.gym == 'undefined' ){
     var gymVar = " ";
   } else {
-    var gymVar = account.gym;
+    var gymVar = req.user.gym;
   }
 
   //Check if interests returns a string or object
-  if (typeof account.interests[0] == 'undefined'){
+  if (typeof req.user.interests[0] == 'undefined'){
     var intr = " ";
   } else {
-    var intr = account.interests[0];
+    var intr = req.user.interests[0];
   }
 
   //Check if address returns a string or object
-  if (typeof account.address[0] == 'undefined'){
+  if (typeof req.user.address[0] == 'undefined'){
     var addr = " ";
   } else {
-    var addr = account.address[0];
+    var addr = req.user.address[0];
   }
 
   //Check if aboutMe returns a string or object
-  if (typeof account.aboutMe == 'undefined'){
+  if (typeof req.user.aboutMe == 'undefined'){
     var about = " ";
   } else {
-    var about = account.aboutMe;
+    var about = req.user.aboutMe;
   }
 
   res.render('editprofile', {
       user: req.user,
       title: 'Edit Profile',
-      account: account,
+      // account: account,
       gym: gymVar,
       interest: intr,
       address: addr,
