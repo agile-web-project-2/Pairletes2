@@ -26,9 +26,9 @@ block content
           });
       });
 
-      function switchRoom(room){
-          socket.emit('switchRoom', room);
-      }
+      socket.on('sendChat', function(msg){
+          $('#messages').append('<li><b>' + username + ':</b> ' + data + '</li>');
+      })
 
       $(function(){
           $('#dataSend').click(function(){
