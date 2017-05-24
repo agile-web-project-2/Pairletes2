@@ -67,7 +67,7 @@ router.post('/register', function(req, res) {
           });
         };
 
-        
+
 
       });
 });
@@ -93,7 +93,7 @@ router.get('/logout', function(req, res) {
 
 /***** GET CHAT *****/
 router.get('/messages', function(req, res) {
-      res.render('messages');
+      res.render('messages', { user : req.user });
 });
 
 router.get('/profile/:id', ctrlAccount.getProfile);
