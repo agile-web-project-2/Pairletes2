@@ -4,7 +4,7 @@ block content
 
   h1 Registration Page
   br
-  form(action="/register",method="post")
+  form(action="/register",method="post" onsubmit="checkSelect()")
     .form-group
       label(for='username') Username: 
       input#username.form-control(type='text' placeholder='Enter a username' name='username' required)
@@ -32,9 +32,60 @@ block content
     .form-group
       label Birthday: 
       br 
-      input#day.dobForm(type='text' placeholder='dd' name='day' maxlength=2 required)
-      input#mth.dobForm(type='text' placeholder='mm' name='mth' maxlength=2 required)
-      input#yr.dobForm(type='text' placeholder='yyyy' name='yr' maxlength=4 required)
-      p lets just assume people will input the correct date for now
+      select.dobForm(name="mth" onchange="call()" required)
+        option(value='') Month
+        option(value='1') Jan
+        option(value='2') Feb
+        option(value='3') Mar
+        option(value='4') Apr
+        option(value='5') May
+        option(value='6') Jun
+        option(value='7') Jul
+        option(value='8') Aug
+        option(value='9') Sep
+        option(value='10') Oct
+        option(value='11') Nov
+        option(value='12') Dec
+      select.dobForm(name='day' required)
+        option(value='') Day
+    
+      select.dobForm(name='year', onchange='call()' required)
+        option(value='') Year
+      //needs server side error handling if nothing happens on empty birthday
     
     input.btn.btn-default(type='submit' value='Register')
+    
+    
+    script.
+      //Function to fill in birthday dropdown menu to ensure correct values
+      //https://knowledgecornor.blogspot.com.au/2013/08/birthday-dropdown-using-html-and-js.html
+      function call(){
+        var kcyear = document.getElementsByName("year")[0],
+        kcmonth = document.getElementsByName("mth")[0],
+        kcday = document.getElementsByName("day")[0];
+             
+        var d = new Date();
+        var n = d.getFullYear();
+        for (var i = n; i >= 1900; i--) {
+        var opt = new Option();
+        opt.value = opt.text = i;
+        kcyear.add(opt);
+          }
+        kcyear.addEventListener("change", validate_date);
+        kcmonth.addEventListener("change", validate_date);
+
+        function validate_date() {
+        var y = +kcyear.value, m = kcmonth.value, d = kcday.value;
+        if (m === "2")
+           var mlength = 28 + (!(y & 3) && ((y % 100) !== 0 || !(y & 15)));
+        else var mlength = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][m - 1];
+        kcday.length = 0;
+        for (var i = 1; i <= mlength; i++) {
+           var opt = new Option();
+           opt.value = opt.text = i;
+           if (i == d) opt.selected = true;
+           kcday.add(opt);
+        }
+           }
+          validate_date();
+      };

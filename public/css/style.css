@@ -77,6 +77,7 @@ body {
 .masthead-brand {
   margin-top: 10px;
   margin-bottom: 10px;
+  padding-top: 10px;
 }
 
 .masthead-nav > li {
@@ -196,7 +197,7 @@ body {
 /* BIRTHDAY INPUT FORM STYLING*/
 .dobForm {
   /*display: block;*/
-  width: 70px;
+  width: 100px;
   height: 34px;
   padding: 6px 12px;
   font-size: 14px;
@@ -274,4 +275,16 @@ button {
 
 .logo-status {
   color: rgba(247, 227, 38, 1);
+}
+
+.links {
+  text-decoration: underline;
+}
+
+.links:hover {
+  font-weight: bold;
+}
+
+.md {
+  font-size: 1.2em;
 }

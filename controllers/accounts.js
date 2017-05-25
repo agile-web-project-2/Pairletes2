@@ -8,49 +8,43 @@ var Account = mongoose.model('Account');
 
 /* Register new user */
 module.exports.registerNewUser = function(req, res) {
-  var bday = req.body.yr + '-' + req.body.mth + '-' + req.body.day;
-
-  //CLean data ready for db store
+  var bday = req.body.year + '-' + req.body.mth + '-' + req.body.day;
 
   // register account through passport local
   Account.
     register(new Account({
-      username : req.body.username,
+      username : (req.body.username).toLowerCase(),
       name: req.body.name,
-      email: req.body.email,
+      email: (req.body.email).toLowerCase(),
       gender: req.body.gender,
       birthdate: bday
     }), req.body.password,
       function(err, account) {
         if (err) {
-          console.log('There was an error while registering the email!', err);
+          console.log('There was an error while registering the username!', err);
           console.log('account: ' + account);
          //  sendJsonResponse(res, 400, err);
           return res.render('register', { account : account });
         } else {
-          console.log('The email is registered!');
+          console.log('The username is registered!');
          //  sendJsonResponse(res, 201, account);
           // res.redirect('/login');
 
-          // loggin and redirect the user to the profile page after registration.
+          // login and redirect the user to the profile page after registration.
           passport.authenticate('local')(req, res, function () {
             res.redirect('/profile/'+req.user.username);
           });
         };
-
-
-
       });
 };
 
 /*GET profile*/
 module.exports.getProfile = function(req,res){
-  //var account = new Account();
   //routed from /profile/:id
   //Found the account
   //Account.findById(req.params.id, function(err, account){
-  console.log('req.params.username: %s,    req.params.id: %s', req.params.username, req.params.id);  
-  Account.findOne({username: req.params.username}, function(err, account){  
+  console.log('req.params.username: %s,    req.params.id: %s', req.params.username, req.params.id);
+  Account.findOne({username: req.params.username}, function(err, account){
     if(err){
       console.log(err);
       res.render('error.jade', {
@@ -64,7 +58,7 @@ module.exports.getProfile = function(req,res){
         var year = x.getFullYear();
         var month = x.getMonth()+1;
         var dt = x.getDate();
-      
+
 
         if (dt < 10) {
         dt = '0' + dt;
@@ -162,12 +156,6 @@ module.exports.updateProfile = function(req,res){
 *URL: /editprofile
 */
 module.exports.prefillUpdateProfile = function(req, res) {
-  //var account = new Account();
-  //TO DISPLAY IN INPUT TEXTBOXES ------unused at the moment
-  //Check if gym returns a string or object
-  // Account.findById(req.params.id, function(err, account){
-  //
-  // });
   if (typeof req.user.gym != 'string' || typeof req.user.gym == 'undefined' ){
     var gymVar = " ";
   } else {
@@ -232,3 +220,4 @@ module.exports.findmatchResults = function(req,res){
       }
     });   
 };
+

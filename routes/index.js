@@ -75,13 +75,6 @@ router.post('/editprofile', ctrlAccount.updateProfile);
 
 
 
-/***** GET ABOUT *****/
-router.get('/about', function(req, res) {
-      res.render('about', { user : req.user });
-});
-
-
-
 /***** GET FINDMATCH *****/
 router.get('/findmatch', function(req, res) {
       res.render('findmatch', { user : req.user });
@@ -92,11 +85,25 @@ router.post('/findmatch', ctrlAccount.findmatchResults);
 
 
 
-// /***** PERSON LIST ---- Remove later ******/
-// router.get('/person', ctrlPerson.personList);
-// router.post('/person', ctrlPerson.newPerson);
-// /* DELETE person */
-// router.get('/delete/:id', ctrlPerson.deletePerson);
+/***** GET ABOUT PAGES *****/
+router.get('/about', function(req, res) {
+      res.render('about', { user : req.user });
+});
 
+router.get('/about/matchalgo', function(req, res) {
+      res.render('matchalgo', { user : req.user });
+});
+
+router.get('/about/designprocess', function(req, res) {
+      res.render('designprocess', { user : req.user });
+});
+
+router.get('/about/testing', function(req, res) {
+      res.render('testing', { user : req.user });
+});
+
+router.get('/about/references', function(req, res) {
+      res.render('references', { user : req.user });
+});
 
 module.exports = router;
