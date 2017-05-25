@@ -8,62 +8,57 @@ var Account = mongoose.model('Account');
 
 /* Register new user */
 module.exports.registerNewUser = function(req, res) {
-  var bday = req.body.yr + '-' + req.body.mth + '-' + req.body.day;
-
-  //CLean data ready for db store
+  var bday = req.body.year + '-' + req.body.mth + '-' + req.body.day;
 
   // register account through passport local
   Account.
     register(new Account({
-      username : req.body.username,
+      username : (req.body.username).toLowerCase(),
       name: req.body.name,
-      email: req.body.email,
+      email: (req.body.email).toLowerCase(),
       gender: req.body.gender,
       birthdate: bday
     }), req.body.password,
       function(err, account) {
         if (err) {
-          console.log('There was an error while registering the email!', err);
+          console.log('There was an error while registering the username!', err);
           console.log('account: ' + account);
          //  sendJsonResponse(res, 400, err);
           return res.render('register', { account : account });
         } else {
-          console.log('The email is registered!');
+          console.log('The username is registered!');
          //  sendJsonResponse(res, 201, account);
           // res.redirect('/login');
 
-          // loggin and redirect the user to the profile page after registration.
+          // login and redirect the user to the profile page after registration.
           passport.authenticate('local')(req, res, function () {
-            res.redirect('/profile/'+req.user.id);
+            res.redirect('/profile/'+req.user.username);
           });
         };
-
-
-
       });
 };
 
 /*GET profile*/
 module.exports.getProfile = function(req,res){
-  var account = new Account();
   //routed from /profile/:id
   //Found the account
-  Account.findById(req.params.id, function(err, account){
-  //Account.findOne({username: 'req.params.username'}, function(err, account){  
+  //Account.findById(req.params.id, function(err, account){
+  console.log('req.params.username: %s,    req.params.id: %s', req.params.username, req.params.id);
+  Account.findOne({username: req.params.username}, function(err, account){
     if(err){
       console.log(err);
       res.render('error.jade', {
-          message: "Whooops, this user doesn't seem to be on Pairletes"
+          message: "Whooops, an error occured.\nThis user doesn't seem to be on Pairletes"
       });
     } else {
-
+      console.log(account);
       //res.json(account);
       if (account) {
         var x = account.birthdate;
         var year = x.getFullYear();
         var month = x.getMonth()+1;
         var dt = x.getDate();
-      
+
 
         if (dt < 10) {
         dt = '0' + dt;
@@ -148,7 +143,7 @@ module.exports.updateProfile = function(req,res){
         res.send(err);
         return;
       }
-        res.redirect('/profile/'+req.user.id);
+        res.redirect('/profile/'+req.user.username);
       //res.json(account);
     })
 
@@ -161,12 +156,6 @@ module.exports.updateProfile = function(req,res){
 *URL: /editprofile
 */
 module.exports.prefillUpdateProfile = function(req, res) {
-  //var account = new Account();
-  //TO DISPLAY IN INPUT TEXTBOXES ------unused at the moment
-  //Check if gym returns a string or object
-  // Account.findById(req.params.id, function(err, account){
-  //
-  // });
   if (typeof req.user.gym != 'string' || typeof req.user.gym == 'undefined' ){
     var gymVar = " ";
   } else {
@@ -208,16 +197,27 @@ module.exports.prefillUpdateProfile = function(req, res) {
 
 /*FIND MATCH*/
 module.exports.findmatchResults = function(req,res){
-    matchResults = [{
-      username: "mattyrat"
-    },{
-      username: "Louigi"
-    }];
+    //Account.findOne({username: 'p'}, 'username name gender birthdate gym address interests aboutMe', function (err, matchResults) {
+    var gender
 
-    res.render('findmatchResults.jade', {
-      matchResults: matchResults
-    });
+    // if (req.body.gender == '')
+    // gender = req.body.gender;
 
-      
-
+    Account.
+      find({}).
+      limit(9).
+      exec(function (err, matchResults) {
+      if (err) { 
+        console.log(err);
+        res.render('error.jade', { message: "There is a matching error" });
+      } else {
+        console.log('matchResults ---------------------\n', matchResults);
+        console.log('matchResults.username ---------------------\n', matchResults.username);
+        res.render('findmatchResults.jade', {
+          user: req.user,
+          matchResults: matchResults
+        });
+      }
+    });   
 };
+

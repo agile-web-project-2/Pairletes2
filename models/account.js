@@ -6,7 +6,7 @@ var Account = new Schema({
     username: String,
     name: String,
     email: String,
-    password: String,
+    //password: String,
     gender: String,
     birthdate: Date,
     gym: String,

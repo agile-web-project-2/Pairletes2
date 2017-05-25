@@ -1,9 +1,9 @@
 var io = require('socket.io')();
 var ctrlChat = require('./controllers/chat');
 
-//var usernames = {};
+var usernames = {};
 
-//var rooms = ['room1', 'room2'];
+var rooms = ['room1', 'room2'];
 
 io.on('connection', function(socket){
     
@@ -15,7 +15,7 @@ io.on('connection', function(socket){
     	socket.join(chat);
     });
 
-    /*socket.on('addUser', function(username){
+    socket.on('addUser', function(username){
     	console.log('joining chat')
     	socket.username = username;
     	socket.room = 'room1';
@@ -47,7 +47,7 @@ io.on('connection', function(socket){
     	socket.room = newroom;
     	socket.broadcast.to(newroom).emit('updateChat', 'SERVER', socket.username + ' has joined the room');
     	socket.emit('updateRooms', rooms, newroom);
-    })*/
+    })
 });
 
 module.exports = io;

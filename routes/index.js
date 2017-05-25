@@ -54,9 +54,13 @@ router.get('/login', function(req, res) {
 /***** GET LOGOUT *****/
 router.get('/logout', function(req, res) {
       req.logout();
-          res.redirect('/');
+      res.redirect('/');
 });
 
+/*****GET CHATROOM****/
+router.get('/CHATROOM', function(socket){
+  res.render('chatRoom', {user : req.user});
+})
 
 /***** GET CHAT *****/
 //gets all the chats into one page
@@ -71,66 +75,16 @@ router.post('/messages/:chatId', ctrlChat.sendReply);
 //new conversation
 router.post('messages/newMessage/:recipId', ctrlChat.newMessage);
 
-router.get('/profile/:id', ctrlAccount.getProfile);
+router.get('/profile/:username', ctrlAccount.getProfile);
 //router.get('/profile/:username', ctrlAccount.getProfile);
 
 
 /***** GET EDIT PROFILE *****/
 // router.get('/editprofile', ctrlAccount.getEditProfile);
-router.get('/editprofile', function(req, res) {
-  //var account = new Account();
-  //TO DISPLAY IN INPUT TEXTBOXES ------unused at the moment
-  //Check if gym returns a string or object
-  // Account.findById(req.params.id, function(err, account){
-  //
-  // });
-  if (typeof req.user.gym != 'string' || typeof req.user.gym == 'undefined' ){
-    var gymVar = " ";
-  } else {
-    var gymVar = req.user.gym;
-  }
-
-  //Check if interests returns a string or object
-  if (typeof req.user.interests[0] == 'undefined'){
-    var intr = " ";
-  } else {
-    var intr = req.user.interests[0];
-  }
-
-  //Check if address returns a string or object
-  if (typeof req.user.address[0] == 'undefined'){
-    var addr = " ";
-  } else {
-    var addr = req.user.address[0];
-  }
-
-  //Check if aboutMe returns a string or object
-  if (typeof req.user.aboutMe == 'undefined'){
-    var about = " ";
-  } else {
-    var about = req.user.aboutMe;
-  }
-
-  res.render('editprofile', {
-      user: req.user,
-      title: 'Edit Profile',
-      // account: account,
-      gym: gymVar,
-      interest: intr,
-      address: addr,
-      aboutMe: about
-  });
-});
+router.get('/editprofile', ctrlAccount.prefillUpdateProfile);
 
 /***** POST UPDATE PROFILE *****/
 router.post('/editprofile', ctrlAccount.updateProfile);
-
-
-
-/***** GET ABOUT *****/
-router.get('/about', function(req, res) {
-      res.render('about', { user : req.user });
-});
 
 
 
@@ -144,11 +98,25 @@ router.post('/findmatch', ctrlAccount.findmatchResults);
 
 
 
-// /***** PERSON LIST ---- Remove later ******/
-// router.get('/person', ctrlPerson.personList);
-// router.post('/person', ctrlPerson.newPerson);
-// /* DELETE person */
-// router.get('/delete/:id', ctrlPerson.deletePerson);
+/***** GET ABOUT PAGES *****/
+router.get('/about', function(req, res) {
+      res.render('about', { user : req.user });
+});
 
+router.get('/about/matchalgo', function(req, res) {
+      res.render('matchalgo', { user : req.user });
+});
+
+router.get('/about/designprocess', function(req, res) {
+      res.render('designprocess', { user : req.user });
+});
+
+router.get('/about/testing', function(req, res) {
+      res.render('testing', { user : req.user });
+});
+
+router.get('/about/references', function(req, res) {
+      res.render('references', { user : req.user });
+});
 
 module.exports = router;

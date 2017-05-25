@@ -1,0 +1,70 @@
+extend layout
+
+block content
+  script.
+      console.log('loading script');
+      var socket = io();
+      console.log('connected');
+      
+      socket.on('connect', function(){
+          socket.emit('addUser', '#{user.username}');
+      });
+
+      socket.on('updateChat', function(username, data){
+          var messages = document.getElementById('messages');
+          var newText = document.createElement('li');
+          msg = ('<b>' + username + ': </b>' + data)
+          newText.innerHTML = msg
+          messages.appendChild(newText);
+      });
+      
+      socket.on('updateRooms', function(rooms, current_room){
+          $('#rooms').empty();
+          $.each(rooms, function(key, value){
+              if(value == current_room){
+                  $('#rooms').append('<div>' + value + '<div>');
+              }
+              else{
+                  $('#rooms').append('<div><a href="#" onclick="switchRoom(\'' + value + '\')">' + value + '</a></div>')
+              }
+          });
+      });
+
+      $(function(){
+          $('#dataSend').click(function(){
+              var message = $('#data').val();
+              $('#data').val('');
+              socket.emit('newMessage', message);
+          });
+          
+          $('#data').keypress(function(e){
+              if(e.which == 13){
+                  $(this).blur();
+                  $('#dataSend').focus().click();
+              }
+          });
+          
+      });
+
+  if(user)
+    .container
+      #chatwindow
+        #contents
+          b ROOMS
+          #rooms
+
+          h1 Messages
+          ul(id="messages" name="")
+    
+          form(action="", id='msgForm', onSubmit='return false;')
+            input.form-control(id="data" autocomplete="off" name="composedMessage")
+            br
+            br
+            br
+            button.btn.btn-default(type='button', id='dataSend' value="send") Send
+
+  if(!user)
+     h3.text-center Please Login to Chat!
+     br
+     p.lead
+        a.btn.btn-lg.btn-default(href='/login') Let's Login!
