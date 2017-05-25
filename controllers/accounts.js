@@ -209,24 +209,26 @@ module.exports.prefillUpdateProfile = function(req, res) {
 
 /*FIND MATCH*/
 module.exports.findmatchResults = function(req,res){
-    Account.findOne({username: 'p'}, 'username name gender birthdate gym address interests aboutMe', function (err, account) {
+    //Account.findOne({username: 'p'}, 'username name gender birthdate gym address interests aboutMe', function (err, matchResults) {
+    var gender
+
+    // if (req.body.gender == '')
+    // gender = req.body.gender;
+
+    Account.
+      find({}).
+      limit(9).
+      exec(function (err, matchResults) {
       if (err) { 
         console.log(err);
         res.render('error.jade', { message: "There is a matching error" });
-      };
-      console.log('account ---------------------\n', account);
-    });
-
-    matchResults = [{
-      username: "mattyrat"
-    },{
-      username: "Louigi"
-    }];
-
-    res.render('findmatchResults.jade', {
-      matchResults: matchResults
-    });
-
-      
-
+      } else {
+        console.log('matchResults ---------------------\n', matchResults);
+        console.log('matchResults.username ---------------------\n', matchResults.username);
+        res.render('findmatchResults.jade', {
+          user: req.user,
+          matchResults: matchResults
+        });
+      }
+    });   
 };

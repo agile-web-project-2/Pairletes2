@@ -1,14 +1,17 @@
 extends layout
 
 block content    
-  h3.text-center YOUR MATCH RESULTS
-  .container
-    .row.text-center
-      each match in matchResults
-        .col-sm-4
-          .thumbnail
-            img(src="...", alt="#{matchResults.username}", width="400", height="300")
-            p
-              strong #{match.username}
-            p Male
-            button.btn Request
+  h3.text-center YOUR TOP MATCH RESULTS
+  .row.text-center
+    each match in matchResults
+      .col-sm-4
+        .thumbnail
+          h1
+            strong #{match.username}
+          p Male
+          a(href="")
+            button.btn.btn-default(type='button') Request
+          &nbsp;
+          &nbsp;
+          a(href="/profile/#{match.username}")
+            button.btn.btn-default(type='button') View profile

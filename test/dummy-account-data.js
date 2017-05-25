@@ -1,4 +1,4 @@
-module.exports.u1 = {
+var u1 = {
     username: 'johnytest',
     name: 'John',
     email: 'john@tmail.com',
@@ -10,7 +10,7 @@ module.exports.u1 = {
     aboutMe: 'Triathalon man'
 };
 
-module.exports.u2 = {
+var u2 = {
     username: 'maxipad',
     name: 'max',
     email: 'max@tmail.com',
@@ -22,7 +22,7 @@ module.exports.u2 = {
     aboutMe: 'rowing man'
 };
 
-module.exports.u3 = {
+var u3 = {
     username: 'jesstilde',
     name: 'Jess',
     email: 'jess@tmail.com',
@@ -34,7 +34,7 @@ module.exports.u3 = {
     aboutMe: 'Triathalon man'
 };
 
-module.exports.u4 = {
+var u4 = {
     username: 'boohoo',
     name: 'boon',
     email: 'boondocks@tmail.com',
@@ -46,9 +46,9 @@ module.exports.u4 = {
     aboutMe: 'Triathalon man'
 };
 
-module.exports.u5 = {
-    username: 'johnytest',
-    name: 'John',
+var u5 = {
+    username: 'youbeaut',
+    name: 'aussie',
     email: 'john@tmail.com',
     gender: 'Female',
     birthdate: '1992-05-19',
@@ -58,7 +58,7 @@ module.exports.u5 = {
     aboutMe: "let's go for a run yo"
 };
 
-module.exports.u6 = {
+var u6 = {
     username: 'totytester',
     name: 'tot',
     email: 'tot@tmail.com',
@@ -70,7 +70,7 @@ module.exports.u6 = {
     aboutMe: 'nothing to know'
 };
 
-module.exports.u7 = {
+var u7 = {
     username: 'specialgirl',
     name: 'John',
     email: 'john@tmail.com',
@@ -82,7 +82,7 @@ module.exports.u7 = {
     aboutMe: "let's add something special %423$(&%DF*(@!@$)R"
 };
 
-module.exports.u8 = {
+var u8 = {
     username: 'reallyolddude',
     name: 'knight Lancelot',
     email: 'jimmy@tmail.com',
@@ -94,7 +94,7 @@ module.exports.u8 = {
     aboutMe: 'My real interest is jousting'
 };
 
-module.exports.u9 = {
+var u9 = {
     username: 'moondog',
     name: 'Mr Moon',
     email: 'crater1@tmail.com',
@@ -105,3 +105,5 @@ module.exports.u9 = {
     interests: [{interest1: 'running', interest2: 'swimming', interest3: 'cycling'}],
     aboutMe: 'Triathalon man'
 };
+
+module.exports.data = [u1,u2,u3,u4,u5,u6,u7,u8,u9];
