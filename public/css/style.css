@@ -313,7 +313,6 @@ button {
   padding-bottom: 20px;
   text-shadow: none;
   height: 600px;
-
   text-align: left;
   border-radius: 7px;
   position: relative;
@@ -334,4 +333,9 @@ button {
 
 .chatlist li{
   list-style: none;
+}
+
+.thumbnail{
+  background-color: rgba(247, 227, 38, 0.4);
+  padding-bottom: 20px;
 }
