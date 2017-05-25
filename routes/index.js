@@ -84,7 +84,7 @@ router.get('/messages/newMessage/:recipId', function(req, res, next){
 });
 
 //new conversation
-router.post('messages/newMessage/:recipId', ctrlChat.newMessage);
+router.post('/messages/newMessage/:recipId', ctrlChat.newMessage);
 
 router.get('/profile/:username', ctrlAccount.getProfile);
 //router.get('/profile/:username', ctrlAccount.getProfile);

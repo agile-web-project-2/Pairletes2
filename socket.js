@@ -10,8 +10,8 @@ var rooms = ['Gym', 'BootCamp', 'Cycling', 'Rowing', 'Running', 'Triathalon'];
 io.on('connection', function(socket){
     
     //FOR PRIVATE MESSAGES
-    socket.on('newMessage', function(msg, io){
-    	io.socket.in(chat).emit('refresh messages', chat);
+    socket.on('newMessage', function(msg){
+    	//socket.to(chat).emit('refresh messages', chat);
     });
 
     socket.on('enterChat', function(chat){
