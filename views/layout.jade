@@ -34,8 +34,6 @@ html(lang='en')
                             p Welcome, #{user.username}!
                       li
                         a(href="/about") About
-                      li
-                        a(href='/messages') Messages
                       
                       //NOT LOGGED IN
                       if (!user)
@@ -45,12 +43,16 @@ html(lang='en')
                           a(href="/register") Register
                       
                       //LOGGED IN
-                      if (user)                      
+                      if (user)      
+                        li
+                         a(href='/messages') Messages
+                        li
+                         a(href='/CHATROOM') Chat Room
                         li 
                           a(href="/profile/"+'#{user.username}') Profile
                         li.active
-                          a(href="/findmatch") Find A Match!
-                        li.active
+                          a(href="/findmatch") Find A Match!                        
+                        li
                           a(href="/logout") Logout
                         
               

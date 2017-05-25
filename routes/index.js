@@ -7,6 +7,7 @@ var Account = require('../models/account');
 /* CONTROLLER VARIABLES*/
 var ctrlPerson = require('../controllers/person');
 var ctrlAccount = require('../controllers/accounts');
+var ctrlChat = require('../controllers/chat')
 
 
 /* Request needed to GET data to the views --- CONFIGURE LATER*/
@@ -56,11 +57,23 @@ router.get('/logout', function(req, res) {
       res.redirect('/');
 });
 
+/*****GET CHATROOM****/
+router.get('/CHATROOM', function(req, res){
+  res.render('chatRoom', {user : req.user});
+})
 
 /***** GET CHAT *****/
-router.get('/messages', function(req, res) {
-      res.render('messages', { user : req.user });
-});
+//gets all the chats into one page
+router.get('/messages', ctrlChat.getChats);
+
+//get a single chat
+router.get('/messages/:recipId', ctrlChat.enterChat);
+
+//send reply
+router.post('/messages/:chatId', ctrlChat.sendReply);
+
+//new conversation
+router.post('messages/newMessage/:recipId', ctrlChat.newMessage);
 
 router.get('/profile/:username', ctrlAccount.getProfile);
 //router.get('/profile/:username', ctrlAccount.getProfile);

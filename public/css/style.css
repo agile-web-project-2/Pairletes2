@@ -44,10 +44,11 @@ body {
 .site-wrapper {
   display: table;
   width: 100%;
-  height: 100%; /* For at least Firefox */
+  /*height: 100%; /* For at least Firefox */
   min-height: 100%;
   -webkit-box-shadow: inset 0 0 100px rgba(0,0,0,.5);
           box-shadow: inset 0 0 100px rgba(0,0,0,.5);
+
 }
 .site-wrapper-inner {
   display: table-cell;
@@ -173,7 +174,7 @@ body {
   .masthead,
   .mastfoot,
   .cover-container {
-    width: 800px;
+    width: 900px;
   }
 }
 
@@ -287,4 +288,50 @@ button {
 
 .md {
   font-size: 1.2em;
+}
+
+
+.roomlist {
+  text-transform: uppercase;
+  font-size: 1.3em;
+  color: #FFF;
+  background-color: rgba(247, 227, 38, 0.4);
+  padding: 3px;
+  margin-bottom: 3px;
+  border-radius: 5px;
+  text-shadow: none;
+}
+
+.roomlist a{
+  color: #333;
+  font-weight: bold;
+}
+
+.chatlist{
+  font-size: 1.3em;
+  background-color: rgba(247, 227, 38, 0.2);
+  padding-bottom: 20px;
+  text-shadow: none;
+  height: 600px;
+
+  text-align: left;
+  border-radius: 7px;
+  position: relative;
+
+}
+
+.chattop{
+  height: 300px;
+  min-height: 100%;
+  overflow:auto;
+}
+
+.chatbot{
+  position: absolute;
+  bottom: 0;
+  padding-bottom: 10px;
+}
+
+.chatlist li{
+  list-style: none;
 }

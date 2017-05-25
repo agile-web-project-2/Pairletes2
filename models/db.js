@@ -64,3 +64,5 @@ process.on('SIGTERM', function() {
 /*********************************/
 require('./person.js');
 require('./message.js');
+require('./chat.js')
+require('./chatRoom.js')
