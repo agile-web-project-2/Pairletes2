@@ -17,6 +17,14 @@ block content
           newText.innerHTML = msg
           messages.appendChild(newText);
       });
+
+      socket.on('message', function(msg){
+          var messages = document.getElementById('messages');
+          var newText = document.createElement('li');
+          msg = ('<b>' + username + ': </b>' + data)
+          newText.innerHTML = msg
+          messages.appendChild(newText);
+      });
       
       socket.on('updateRooms', function(rooms, current_room){
           $('#rooms').empty();
@@ -29,6 +37,10 @@ block content
               }
           });
       });
+
+      function switchRoom(room){
+          socket.emit('switchRoom', room);
+      }
 
       $(function(){
           $('#dataSend').click(function(){
