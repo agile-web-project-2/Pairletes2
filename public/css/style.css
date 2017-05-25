@@ -293,7 +293,7 @@ button {
 
 .roomlist {
   text-transform: uppercase;
-  font-size: 1.3em;
+  font-size: 1.2em;
   color: #FFF;
   background-color: rgba(247, 227, 38, 0.4);
   padding: 3px;
@@ -310,17 +310,18 @@ button {
 .chatlist{
   font-size: 1.3em;
   background-color: rgba(247, 227, 38, 0.4);
-  padding-bottom: 20px;
+  padding-top: 10px;
+  padding-bottom: 50px;
   text-shadow: none;
   height: 500px;
   text-align: left;
   border-radius: 7px;
-  position: relative;
+  /*position: relative;*/
   color: #333;
 }
 
 .chattop{
-  height: 300px;
+  max-height: 400px;
   min-height: 100%;
   overflow:auto;
 }
