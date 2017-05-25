@@ -77,6 +77,7 @@ body {
 .masthead-brand {
   margin-top: 10px;
   margin-bottom: 10px;
+  padding-top: 10px;
 }
 
 .masthead-nav > li {
@@ -282,4 +283,8 @@ button {
 
 .links:hover {
   font-weight: bold;
+}
+
+.md {
+  font-size: 1.2em;
 }

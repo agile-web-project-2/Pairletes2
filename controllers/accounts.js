@@ -21,12 +21,12 @@ module.exports.registerNewUser = function(req, res) {
     }), req.body.password,
       function(err, account) {
         if (err) {
-          console.log('There was an error while registering the email!', err);
+          console.log('There was an error while registering the username!', err);
           console.log('account: ' + account);
          //  sendJsonResponse(res, 400, err);
           return res.render('register', { account : account });
         } else {
-          console.log('The email is registered!');
+          console.log('The username is registered!');
          //  sendJsonResponse(res, 201, account);
           // res.redirect('/login');
 
@@ -40,7 +40,6 @@ module.exports.registerNewUser = function(req, res) {
 
 /*GET profile*/
 module.exports.getProfile = function(req,res){
-  //var account = new Account();
   //routed from /profile/:id
   //Found the account
   //Account.findById(req.params.id, function(err, account){

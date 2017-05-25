@@ -32,7 +32,7 @@ block content
     .form-group
       label Birthday: 
       br 
-      select.dobForm(name="mth" onchange="call()")
+      select.dobForm(name="mth" onchange="call()" required)
         option(value='') Month
         option(value='1') Jan
         option(value='2') Feb
@@ -46,38 +46,17 @@ block content
         option(value='10') Oct
         option(value='11') Nov
         option(value='12') Dec
-      select.dobForm(name='day')
+      select.dobForm(name='day' required)
         option(value='') Day
     
-      select.dobForm(name='year', onchange='call()')
+      select.dobForm(name='year', onchange='call()' required)
         option(value='') Year
-      
-      br
-      .error-msg
-
-      //- input#day.dobForm(type='text' placeholder='dd' name='day' maxlength=2 required)
-      //- input#mth.dobForm(type='text' placeholder='mm' name='mth' maxlength=2 required)
-      //- input#yr.dobForm(type='text' placeholder='yyyy' name='yr' maxlength=4 required)
-      //- p lets just assume people will input the correct date for now
+      //needs server side error handling if nothing happens on empty birthday
     
     input.btn.btn-default(type='submit' value='Register')
     
     
     script.
-      //- function checkSelect() {
-      //-   var formMth = document.getElementsByName("mth")[0],
-      //-   formDay = document.getElementsByName("day")[0],
-      //-   formYear = document.getElementsByName("year")[0];
-      //-   for(i=0; i<=12; i++){
-      //-     //check if select values on dropdown list are not on default
-      //-     if (formMth.options[i].text == 'Month'|| formDay.options[i].text == 'Day' || formYear.options[i].text == 'Year'){
-      //-       alert('Birthday Required');
-      //-       return False;
-      //-     } 
-      //-     
-      //-   }
-      //-   
-      //- };
       //Function to fill in birthday dropdown menu to ensure correct values
       //https://knowledgecornor.blogspot.com.au/2013/08/birthday-dropdown-using-html-and-js.html
       function call(){
