@@ -1,0 +1,38 @@
+extends layout
+
+block content
+  script.
+      console.log('loading script');
+      var socket = io();
+      console.log('connected');
+      
+      $(function(){
+          $('#dataSend').click(function(){
+              var message = $('#data').val();
+              $('#data').val('');
+              socket.emit('newMessage', message);
+              alert('Message Sent!');
+          });
+          
+          $('#data').keypress(function(e){
+              if(e.which == 13){
+                  $(this).blur();
+                  $('#dataSend').focus().click();
+              }
+          });
+          
+      });
+
+  .container
+    #chatwindow
+      #contents
+
+        h1 Messages
+        ul(id="messages")
+    
+        form(action="", id='msgForm', onSubmit='return false;')
+          input.form-control(id="data" autocomplete="off")
+          br
+          br
+          br
+          button.btn.btn-default(type='button', id='dataSend' value="send") Send

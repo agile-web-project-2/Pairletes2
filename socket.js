@@ -1,13 +1,22 @@
 var io = require('socket.io')();
 var ctrlChat = require('./controllers/chat');
 
-var usernames = {};
+//var usernames = {};
 
-var rooms = ['room1', 'room2'];
+//var rooms = ['room1', 'room2'];
 
 io.on('connection', function(socket){
     
-    socket.on('addUser', function(username){
+    socket.on('newMessage', function(msg, io){
+    	io.socket.in(chat).emit('refresh messages', chat);
+    });
+
+    socket.on('enterChat', function(chat){
+    	socket.join(chat);
+    });
+
+    /*socket.on('addUser', function(username){
+    	console.log('joining chat')
     	socket.username = username;
     	socket.room = 'room1';
     	usernames[username] = username;
@@ -27,6 +36,7 @@ io.on('connection', function(socket){
 
     socket.on('sendChat', function(msg){
     	socket.to(socket.room).emit('updateChat', socket.username, msg);
+    	socket.emit('updateChat', socket.username ,msg)
     });
 
     socket.on('switchRoom', function(newroom){
@@ -37,7 +47,7 @@ io.on('connection', function(socket){
     	socket.room = newroom;
     	socket.broadcast.to(newroom).emit('updateChat', 'SERVER', socket.username + ' has joined the room');
     	socket.emit('updateRooms', rooms, newroom);
-    })
+    })*/
 });
 
 module.exports = io;

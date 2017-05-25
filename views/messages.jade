@@ -7,11 +7,15 @@ block content
       console.log('connected');
       
       socket.on('connect', function(){
-          socket.emit('addUser', prompt("What is your name?"));
+          socket.emit('addUser', '#{user.username}');
       });
 
       socket.on('updateChat', function(username, data){
-          $('#messages').append('<li><b>' + username + ':</b> ' + data + '</li>');
+          var messages = document.getElementById('messages');
+          var newText = document.createElement('li');
+          msg = ('<b>' + username + ': </b>' + data)
+          newText.innerHTML = msg
+          messages.appendChild(newText);
       });
       
       socket.on('updateRooms', function(rooms, current_room){
@@ -26,15 +30,11 @@ block content
           });
       });
 
-      socket.on('sendChat', function(msg){
-          $('#messages').append('<li><b>' + username + ':</b> ' + data + '</li>');
-      })
-
       $(function(){
           $('#dataSend').click(function(){
               var message = $('#data').val();
               $('#data').val('');
-              socket.emit('sendChat', message);
+              socket.emit('newMessage', message);
           });
           
           $('#data').keypress(function(e){
@@ -43,6 +43,7 @@ block content
                   $('#dataSend').focus().click();
               }
           });
+          
       });
 
 
@@ -53,10 +54,10 @@ block content
         #rooms
 
         h1 Messages
-        ul(id="messages")
+        ul(id="messages" name="")
     
         form(action="", id='msgForm', onSubmit='return false;')
-          input.form-control(id="data" autocomplete="off")
+          input.form-control(id="data" autocomplete="off" name="composedMessage")
           br
           br
           br
