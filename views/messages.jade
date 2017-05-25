@@ -1,63 +1,70 @@
 extends layout
 
 block content
-  script.
-      console.log('loading script');
-      var socket = io();
-      console.log('connected');
+  if (user)
+    script.
+        console.log('loading script');
+        var socket = io();
+        console.log('connected');
+        
+        socket.on('connect', function(){
+            socket.emit('addUser', prompt("What is your name?"));
+        });
+
+        socket.on('updateChat', function(username, data){
+            $('#messages').append('<li><b>' + username + ':</b> ' + data + '</li>');
+        });
+        
+        socket.on('updateRooms', function(rooms, current_room){
+            $('#rooms').empty();
+            $.each(rooms, function(key, value){
+                if(value == current_room){
+                    $('#rooms').append('<div>' + value + '<div>');
+                }
+                else{
+                    $('#rooms').append('<div><a href="#" onclick="switchRoom(\'' + value + '\')">' + value + '</a></div>')
+                }
+            });
+        });
+
+        socket.on('sendChat', function(msg){
+            $('#messages').append('<li><b>' + username + ':</b> ' + data + '</li>');
+        })
+
+        $(function(){
+            $('#dataSend').click(function(){
+                var message = $('#data').val();
+                $('#data').val('');
+                socket.emit('sendChat', message);
+            });
+            
+            $('#data').keypress(function(e){
+                if(e.which == 13){
+                    $(this).blur();
+                    $('#dataSend').focus().click();
+                }
+            });
+        });
+
+  if (user)
+    .container
+      #chatwindow
+        #contents
+          b ROOMS
+          #rooms
+
+          h1 Messages
+          ul(id="messages")
       
-      socket.on('connect', function(){
-          socket.emit('addUser', prompt("What is your name?"));
-      });
+          form(action="", id='msgForm', onSubmit='return false;')
+            input.form-control(id="data" autocomplete="off")
+            br
+            br
+            br
+            button.btn.btn-default(type='button', id='dataSend' value="send") Send
 
-      socket.on('updateChat', function(username, data){
-          $('#messages').append('<li><b>' + username + ':</b> ' + data + '</li>');
-      });
-      
-      socket.on('updateRooms', function(rooms, current_room){
-          $('#rooms').empty();
-          $.each(rooms, function(key, value){
-              if(value == current_room){
-                  $('#rooms').append('<div>' + value + '<div>');
-              }
-              else{
-                  $('#rooms').append('<div><a href="#" onclick="switchRoom(\'' + value + '\')">' + value + '</a></div>')
-              }
-          });
-      });
-
-      socket.on('sendChat', function(msg){
-          $('#messages').append('<li><b>' + username + ':</b> ' + data + '</li>');
-      })
-
-      $(function(){
-          $('#dataSend').click(function(){
-              var message = $('#data').val();
-              $('#data').val('');
-              socket.emit('sendChat', message);
-          });
-          
-          $('#data').keypress(function(e){
-              if(e.which == 13){
-                  $(this).blur();
-                  $('#dataSend').focus().click();
-              }
-          });
-      });
-
-
-  .container
-    #chatwindow
-      #contents
-        b ROOMS
-        #rooms
-
-        h1 Messages
-        ul(id="messages")
-    
-        form(action="", id='msgForm', onSubmit='return false;')
-          input.form-control(id="data" autocomplete="off")
-          br
-          br
-          br
-          button.btn.btn-default(type='button', id='dataSend' value="send") Send
+  if (!user)
+    h3.text-center Please Login to Chat!
+    br
+    p.lead
+      a.btn.btn-lg.btn-default(href='/login') Let's Login!
