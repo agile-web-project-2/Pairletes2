@@ -2,6 +2,7 @@ require('../models/db');
 var mongoose = require('mongoose');
 var Message = mongoose.model('Message');
 var Chat = mongoose.model('Chat');
+var Room = mongoose.model('Room');
 var RoomMessage = mongoose.model('ChatRoom');
 
 
@@ -68,7 +69,13 @@ module.exports.getChats = function(req, res, next){
                 });
         	}
         	else{
-        		console.log('creating chat list')
+        		if(chats.length == 0){
+                	console.log('no chats available');
+                	res.render('error',{
+                		message: "It would appear you have no chats at this time"
+                	});
+                }
+                console.log('creating chat list')
                 var fullChats = [];
                 chats.forEach(function(chat){
                 	console.log('new Chat found')
@@ -154,9 +161,10 @@ module.exports.sendReply = function(res, req, next){
 
 
 //Chat room controllers
-module.exports.connect = function(socket){
+module.exports.connect = function(socket, name){
 	console.log('User Connected');
-	Message.find()
+	console.log(name)
+	Room.find({roomName: name})
 	  .sort({times:-1})
 	  .limit(10)
 	  .exec(function(err, messages){
@@ -179,14 +187,15 @@ module.exports.disconnect = function(){
 	console.log('User Disconnected');
 }
 
-module.exports.message = function(msg){
+module.exports.message = function(msg, chatId, userId){
 	console.log('message recieved!');
-	var chatMessage = new RoomMessage({
-		user: socket.user,
+	var chatMessage = new Room({
+		user: userId,
+		roomName: chatId,
 		message: msg,
 		time: new Date()
 	});
-	message.save(function(err, data){
+	chatMessage.save(function(err, data){
 		if(err){
 			console.log(err);
 			res.status(500);
