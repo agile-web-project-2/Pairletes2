@@ -341,7 +341,7 @@ button {
   padding-bottom: 20px;
 }
 
-.profileouter{
+.profileOuter{
   height: 500px;
   min-height: 100%;
   overflow:auto;
