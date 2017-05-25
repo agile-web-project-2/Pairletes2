@@ -1,7 +1,6 @@
 doctype html
 html(lang='en')
   head
-
     meta(charset='utf-8')
     meta(http-equiv='X-UA-Compatible', content='IE=edge')
     meta(name='viewport', content='width=device-width, initial-scale=1')
@@ -43,16 +42,16 @@ html(lang='en')
                           a(href="/register") Register
                       
                       //LOGGED IN
-                      if (user)                      
+                      if (user)      
+                        li
+                         a(href='/messages') Messages
+                        li
+                         a(href='/CHATROOM') Chat Room
                         li 
                           a(href="/profile/"+'#{user.username}') Profile
                         li.active
                           a(href="/findmatch") Find A Match!
                         li
-                         a(href='/messages') Messages
-                        li
-                         a(href='/CHATROOM') Chat Room
-                        li.active
                           a(href="/logout") Logout
                         
               
