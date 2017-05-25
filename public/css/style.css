@@ -309,14 +309,14 @@ button {
 
 .chatlist{
   font-size: 1.3em;
-  background-color: rgba(247, 227, 38, 0.2);
+  background-color: rgba(247, 227, 38, 0.4);
   padding-bottom: 20px;
   text-shadow: none;
   height: 600px;
   text-align: left;
   border-radius: 7px;
   position: relative;
-
+  color: #333;
 }
 
 .chattop{
@@ -332,6 +332,7 @@ button {
 }
 
 .chatlist li{
+  color: #333
   list-style: none;
 }
 
