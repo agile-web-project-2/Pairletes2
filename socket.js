@@ -7,6 +7,7 @@ var rooms = ['room1', 'room2'];
 
 io.on('connection', function(socket){
     
+    //FOR PRIVATE MESSAGES
     socket.on('newMessage', function(msg, io){
     	io.socket.in(chat).emit('refresh messages', chat);
     });
@@ -15,6 +16,8 @@ io.on('connection', function(socket){
     	socket.join(chat);
     });
 
+    //FOR CHAT ROOMS
+    
     socket.on('addUser', function(username){
     	console.log('joining chat')
     	socket.username = username;

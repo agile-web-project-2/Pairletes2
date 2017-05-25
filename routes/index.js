@@ -58,7 +58,7 @@ router.get('/logout', function(req, res) {
 });
 
 /*****GET CHATROOM****/
-router.get('/CHATROOM', function(socket){
+router.get('/CHATROOM', function(req, res){
   res.render('chatRoom', {user : req.user});
 })
 

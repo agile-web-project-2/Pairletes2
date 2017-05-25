@@ -56,7 +56,7 @@ block content
         h1 Messages
         ul(id="messages" name="")
     
-        form(action="", id='msgForm', onSubmit='return false;')
+        form(action="/messages/:chatId", method="POST", id='msgForm', onSubmit='return false;')
           input.form-control(id="data" autocomplete="off" name="composedMessage")
           br
           br
