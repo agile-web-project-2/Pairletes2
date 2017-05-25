@@ -312,7 +312,7 @@ button {
   background-color: rgba(247, 227, 38, 0.4);
   padding-bottom: 20px;
   text-shadow: none;
-  height: 600px;
+  height: 500px;
   text-align: left;
   border-radius: 7px;
   position: relative;
@@ -342,7 +342,7 @@ button {
 }
 
 .profileouter{
-  height: 600px;
+  height: 500px;
   min-height: 100%;
   overflow:auto;
 }
