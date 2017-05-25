@@ -339,3 +339,9 @@ button {
   background-color: rgba(247, 227, 38, 0.4);
   padding-bottom: 20px;
 }
+
+.profileouter{
+  height: 600px;
+  min-height: 100%;
+  overflow:auto;
+}

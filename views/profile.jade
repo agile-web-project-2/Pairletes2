@@ -3,70 +3,70 @@ extends layout
 block content
   h2= title
   br
-  
-  .profileContainer
-    if (user)
+  .profileOuter
+    .profileContainer
+      if (user)
+        .col-sm-4
+          p Username:
+        .col-sm-8
+          p #{account.username}
+          br
+    .profileContainer
       .col-sm-4
-        p Username:
+        p Name:
       .col-sm-8
-        p #{account.username}
+        p #{account.name}
         br
-  .profileContainer
-    .col-sm-4
-      p Name:
-    .col-sm-8
-      p #{account.name}
-      br
-  .profileContainer
-    .col-sm-4
-      p Gender: 
-    .col-sm-8
-      p #{account.gender}
-      br
-  .profileContainer
-    .col-sm-4
-      p Birthday: 
-    .col-sm-8
-      p #{birthdate}
-      br
-  .profileContainer
-    .col-sm-4
-      p Gym: 
-    .col-sm-8
-      p #{gym}
-      br
-  .profileContainer
-    .col-sm-4
-      p Interests: 
-    .col-sm-8
-      p 1. #{interest.interest1}
-      p 2. #{interest.interest2}
-      p 3. #{interest.interest3}
-      br
-  .profileContainer
-    .col-sm-4
-      p Address: 
-    .col-sm-8
-      //hide street from public
-      if(user)
-        p Street: #{address.street}
-      p City/Suburb: #{address.city}
-      p State: #{address.state}
-      p #{address.country}  
-      br 
-  .profileContainer
-    .col-sm-4
-      p About Me: 
-    .col-sm-8
-      p #{aboutMe}
-      br
-  .profileContainer
-    if (user)
+    .profileContainer
       .col-sm-4
-        p Email:
+        p Gender: 
       .col-sm-8
-        p #{account.email}
+        p #{account.gender}
         br
-        a(href="/editprofile")
-          button.btn.btn-default(type='button') Edit profile
-      
+    .profileContainer
+      .col-sm-4
+        p Birthday: 
+      .col-sm-8
+        p #{birthdate}
+        br
+    .profileContainer
+      .col-sm-4
+        p Gym: 
+      .col-sm-8
+        p #{gym}
+        br
+    .profileContainer
+      .col-sm-4
+        p Interests: 
+      .col-sm-8
+        p 1. #{interest.interest1}
+        p 2. #{interest.interest2}
+        p 3. #{interest.interest3}
+        br
+    .profileContainer
+      .col-sm-4
+        p Address: 
+      .col-sm-8
+        //hide street from public
+        if(user)
+          p Street: #{address.street}
+        p City/Suburb: #{address.city}
+        p State: #{address.state}
+        p #{address.country}  
+        br 
+    .profileContainer
+      .col-sm-4
+        p About Me: 
+      .col-sm-8
+        p #{aboutMe}
+        br
+    .profileContainer
+      if (user)
+        .col-sm-4
+          p Email:
+        .col-sm-8
+          p #{account.email}
+          br
+          a(href="/editprofile")
+            button.btn.btn-default(type='button') Edit profile
+        
