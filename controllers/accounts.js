@@ -34,7 +34,7 @@ module.exports.registerNewUser = function(req, res) {
 
           // loggin and redirect the user to the profile page after registration.
           passport.authenticate('local')(req, res, function () {
-            res.redirect('/profile/'+req.user.id);
+            res.redirect('/profile/'+req.user.username);
           });
         };
 
@@ -45,18 +45,19 @@ module.exports.registerNewUser = function(req, res) {
 
 /*GET profile*/
 module.exports.getProfile = function(req,res){
-  var account = new Account();
+  //var account = new Account();
   //routed from /profile/:id
   //Found the account
-  Account.findById(req.params.id, function(err, account){
-  //Account.findOne({username: 'req.params.username'}, function(err, account){  
+  //Account.findById(req.params.id, function(err, account){
+  console.log('req.params.username: %s,    req.params.id: %s', req.params.username, req.params.id);  
+  Account.findOne({username: req.params.username}, function(err, account){  
     if(err){
       console.log(err);
       res.render('error.jade', {
-          message: "Whooops, this user doesn't seem to be on Pairletes"
+          message: "Whooops, an error occured.\nThis user doesn't seem to be on Pairletes"
       });
     } else {
-
+      console.log(account);
       //res.json(account);
       if (account) {
         var x = account.birthdate;
@@ -148,7 +149,7 @@ module.exports.updateProfile = function(req,res){
         res.send(err);
         return;
       }
-        res.redirect('/profile/'+req.user.id);
+        res.redirect('/profile/'+req.user.username);
       //res.json(account);
     })
 
@@ -208,13 +209,12 @@ module.exports.prefillUpdateProfile = function(req, res) {
 
 /*FIND MATCH*/
 module.exports.findmatchResults = function(req,res){
-    Account.findOne({ 
-      username: 'p'
-    }, 'username name gender birthdate gym address interests aboutMe', function (err, account) {
+    Account.findOne({username: 'p'}, 'username name gender birthdate gym address interests aboutMe', function (err, account) {
       if (err) { 
         console.log(err);
         res.render('error.jade', { message: "There is a matching error" });
       };
+      console.log('account ---------------------\n', account);
     });
 
     matchResults = [{

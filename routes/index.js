@@ -62,7 +62,7 @@ router.get('/messages', function(req, res) {
       res.render('messages', { user : req.user });
 });
 
-router.get('/profile/:id', ctrlAccount.getProfile);
+router.get('/profile/:username', ctrlAccount.getProfile);
 //router.get('/profile/:username', ctrlAccount.getProfile);
 
 
