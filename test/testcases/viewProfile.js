@@ -43,12 +43,12 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>xpath=(//button[@type='button'])[9]</td>
+	<td>css=button.btn.btn-default</td>
 	<td></td>
 </tr>
 <tr>
 	<td>verifyLocation</td>
-	<td>https://pairletes2.herokuapp.com/profile/Debbie</td>
+	<td>https://pairletes2.herokuapp.com/profile/jenny</td>
 	<td></td>
 </tr>
 

@@ -3,4 +3,10 @@ extends layout
 block content
   h1.cover-heading Testing, Validation & Results
   br
-  p test
+  p testing is a very important part of the development process, it helps to ensure product quality and building automoted tests greatly reduces the time to find and remove bugs in code. Our project has two sets of one for the backend interactions with data using Moca and one for the front end using Selenium which tests the user interactions with the website. Unfortunately due to time constraints the tests do not perform complete coverage. Given more time the team would have develop a more thorough testing environment which would implement methods to determine complete coverage such a graphs and input space.
+
+  p To run the Selenium test suite open up Selenium IDE with firefox browser. After ensuring that the test cases folder is situated in the same directory, open up the test suite into Selenium IDE. Once open have a new browser ready and press the play entire selenium suite. Once completed there is a runs/failures section in the bottom left hand corner. The number of failures compared to tests run shows how well the program is currently performing compared to expectations. As time progresses the number of bugs should decrease and to determine the quality of the code one could use the number of bugs found compared to the number of development hours as long as the tests are considered complete.
+
+  p To run Moca tests simply type "npm test" in the terminal to play all the Moca tests. If you only want to play one test then type "npm test test/test-{name}" where {name} is the name of the test you wish to run. Similar to Selenium the test suite for Moca will give back a number of passes and failures. This can once again be used to measure the quality of the code as long as the tests used are of good quality.
+
+  p Overall the team recognises that more effort would be needed in the testing of a website, especially one handling user data. For further improvement the team would start developing tests outlines earlier and begin testing at an earlier stage if possible.

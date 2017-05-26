@@ -67,8 +67,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>verifyText</td>
-	<td>css=div.col-sm-8 &gt; p</td>
+	<td>verifyLocation</td>
+	<td>https://pairletes2.herokuapp.com/</td>
 	<td>newuser</td>
 </tr>
 <tr>
