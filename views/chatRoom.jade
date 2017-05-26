@@ -18,10 +18,10 @@ block content
           messages.appendChild(newText);
       });
 
-      socket.on('message', function(msg){
+      socket.on('message', function(name, msg){
           var messages = document.getElementById('messages');
           var newText = document.createElement('li');
-          msg = ('<b>' + username + ': </b>' + data)
+          msg = ('<b>' + name + ': </b>' + msg)
           newText.innerHTML = msg
           messages.appendChild(newText);
       });
@@ -33,7 +33,7 @@ block content
                   $('#rooms').append('<div>' + value + '<div>');
               }
               else{
-                  $('#rooms').append('<div><a href="#" onclick="switchRoom(\'' + value + '\')">' + value + '</a></div>')
+                  $('#rooms').append('<div><a href="" onclick="switchRoom(\'' + value + '\')">' + value + '</a></div>')
               }
           });
       });

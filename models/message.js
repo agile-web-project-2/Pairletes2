@@ -10,7 +10,7 @@ var msgSchema = new mongoose.Schema({
 		required: true
 	},
 	body: {
-		type: mongoose.Schema.Types.ObjectId,
+		type: String,
 		required: true
 	}
     },{

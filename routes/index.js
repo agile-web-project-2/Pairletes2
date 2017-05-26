@@ -63,8 +63,6 @@ router.get('/CHATROOM', function(req, res){
   res.render('chatRoom', {user : req.user});
 });
 
-//
-
 /***** GET CHAT *****/
 //gets all the chats into one page
 router.get('/messages', function(req, res){
@@ -79,9 +77,7 @@ router.get('/messages/:recipId', ctrlChat.enterChat);
 router.post('/messages/:chatId', ctrlChat.sendReply);
 
 //Page for creating new message
-router.get('/messages/newMessage/:recipId', function(req, res, next){
-  res.render('newMessage', { user: req.user });
-});
+router.get('/messages/newMessage/:recipId', ctrlChat.createNewMessage);
 
 //new conversation
 router.post('/messages/newMessage/:recipId', ctrlChat.newMessage);

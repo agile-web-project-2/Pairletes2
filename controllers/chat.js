@@ -3,12 +3,13 @@ var mongoose = require('mongoose');
 var Message = mongoose.model('Message');
 var Chat = mongoose.model('Chat');
 var Room = mongoose.model('Room');
-var RoomMessage = mongoose.model('ChatRoom');
+var Account = mongoose.model('Account');
 
 
 //Private Chat controllers
 module.exports.newMessage = function(req, res, next){
-	console.log('New message');
+	console.log('New message recieved from ' + req.user.username);
+	console.log('Sending to ' + req.recip._id);
 
     if(!req.params.recipId){
     	res.status(422).send({ error: 'Please choose a valid recipient for your message.'});
@@ -20,8 +21,10 @@ module.exports.newMessage = function(req, res, next){
     }
 
 	var chat = new Chat({
-		participants: [req.user._id, req.params.recipId]
+		chatParticipants: [req.user._id, req.recip._id]
 	});
+
+	console.log('new chat created with ' + req.params.recipId);
 
     chat.save(function(err, newChat){
         if(err){
@@ -38,7 +41,7 @@ module.exports.newMessage = function(req, res, next){
 			    body: req.body.composedMessage
 		    });
 
-		  message.save(function(err, data){
+		    message.save(function(err, data){
 	        if(err){
 				console.log(err);
                 res.status(500);
@@ -47,14 +50,32 @@ module.exports.newMessage = function(req, res, next){
                 });
 			}
 			else{
-				res.status(200).json({ message: 'Conversation start!', chatId: chat._id });
 				console.log(data, 'message saved');
-				res.redirect('/findmatch', {user: req.user});
 			}
 		  });
 		}
 	});
 }
+
+module.exports.createNewMessage = function(req,res){
+	console.log('creating new private chat with ' + req.params.recipId)
+
+    Account.
+      find({recip: req.params.recipId}).
+      limit(1).
+      exec(function (err, recip) {
+      if (err) { 
+        console.log(err);
+        res.render('error.jade', { message: "There is no recipient" });
+      } else {
+        console.log('sending new message to', recip.username);
+        res.render('newMessage', {
+          user: req.user,
+          recip: recip
+        });
+      }
+    });   
+};
 
 module.exports.getChats = function(req, res, next){
     console.log('Finding Chats');
@@ -69,12 +90,6 @@ module.exports.getChats = function(req, res, next){
                 });
         	}
         	else{
-        		if(chats.length == 0){
-                	console.log('no chats available');
-                	res.render('error',{
-                		message: "It would appear you have no chats at this time"
-                	});
-                }
                 console.log('creating chat list')
                 var fullChats = [];
                 chats.forEach(function(chat){
@@ -104,7 +119,7 @@ module.exports.getChats = function(req, res, next){
                 	    		}
                 	    		if(fullChats.length === chats.length){
                 	    			console.log('Sending chat list')
-                	    			return res.status(200).json({ chats: fullChats});
+                	    			
                 	    		}
                 	    	}
                 	    });
@@ -177,7 +192,8 @@ module.exports.connect = function(socket, name){
 	  	else{
 	  		console.log('last 10 messages');
 	  		for(var i = messages.length-1; i>0; i--){
-	  			socket.emit('message', messages[i].message);
+	  			console.log(messages[i].user, messages[i].message);
+	  			socket.emit('message', messages[i].user, messages[i].message);
 	  		}
 	  	}
 	  });

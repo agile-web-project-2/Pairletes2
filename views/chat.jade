@@ -1,29 +1,29 @@
 extends layout
 
 block content
-  script.
-      console.log('loading script');
-      var socket = io();
-      console.log('connected');
-      
-      socket.emit('getChats', user._id);
+    script.
+       console.log('loading script');
+       var socket = io();
+       console.log('connected');
 
-      socket.on('generateChats', function(chats){
-        $('#chats').empty();
-          $.each(chats, function(key, value){
-            $('#chats').append('<li><a href="#" onclick="enterChat(\'' + value._id + '\')">' + value.name +</a></li>')
-          });
-      });
+       socket.emit('getChats', user._id);
 
-      function enterChat(chat){
-          socket.emit('enterChat', chat)
-      }
+       socket.on('generateChats', function(chats){
+       	$('#chats').empty();
+       	   $.each(chats, function(key, value){
+       	   	$('#chats').append('<li><a href="#" onclick="enterChat(\'' + value._id + '\')")>' +value.name + '</a></li>')
+       	   });
+       });
 
-  .container
-    #chatwindow
-      #contents
+       function enterChat(chat){
+       	    socket.emit('enterChat', chat)
+       }
 
-        h1 Chats
-        ul(id="chats")
-           each chat in chats
-              li= chat
+    .container
+        #chatwindow
+            #contents
+
+            h1 Chats
+            ul(id="chats")
+                each chat in chats
+                   li= chat
