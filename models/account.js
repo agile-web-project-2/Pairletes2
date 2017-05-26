@@ -11,7 +11,8 @@ var Account = new Schema({
     birthdate: {
         type: Date,
         required: true,
-        min: Date('1910-01-01', 'You cant be that old!')
+        min: new Date('1910-01-01'),
+        max: Date.now 
     },
     gym: String,
     address: [{street: String, city: String, state: String, country: String}],

@@ -197,32 +197,50 @@ module.exports.prefillUpdateProfile = function(req, res) {
 
 /*FIND MATCH*/
 module.exports.findmatchResults = function(req,res){
+
+    function getInterestsFrom(account) {
+      //Check if interests returns a string or object
+        if (typeof account.interests[0] == 'undefined' || typeof account.interests[0] == 'null'){
+          var intr = " ";
+        } else {
+          var intr = account.interests[0];
+        }
+        return intr;
+    }
     
-    function getActivityMatch(me, other) {
+    function getActivityMatch(a, b) {
       /* The input structure should follow the format = { interest1: '', interest2: '', interest3: '' } 
        * The output is the number of matching interests from 'me' to 'other'  */
-      console.log('me: ', me);
-
-      if (typeof(me.interest1 || me.interest2 || me.interest3) !== 'undefined') {
-        console.log("passes through me");
-        var myInterestStr = me.interest1+' '+me.interest2+' '+me.interest3;
+      console.log('me: ', a);
+      if (a.interest1 && a.interest2 && a.interest3) {
+        console.log("Construct my interest string");
+        var myInterestStr = a.interest1+' '+a.interest2+' '+a.interest3;
       } else return 0;
 
-      console.log('other: ', other); 
-      if (other.interest1 && other.interest2 && other.interest3) {
-        console.log("passes through other");
-        var otherInterestStr = other.interest1+' '+other.interest2+' '+other.interest3;
+      console.log('other: ', b); 
+      if (b.interest1 && b.interest2 && b.interest3) {
+        console.log("Construct others interest string");
+        var otherInterestStr = b.interest1+' '+b.interest2+' '+b.interest3;
       } else return 0;
 
       var searchStr = new RegExp(otherInterestStr.replace(/\s/g, '|'), 'g'); // create RegEx search string
       var res = myInterestStr.match(searchStr); // find matching strings
-      return res.leng
+
+
+      if (res) {
+        console.log('Activity match strength: ', res.length);
+        return res.length;
+      } else {
+        console.log('Activity match strength: Not determined');
+        return 0;
+      } 
     };
     
     function age(birthdate) {
       /* Input a date in Date() format; return years since date */ 
       return Math.floor((new Date() - birthdate)/31540000000);
     }
+
 
     /* Adjust the 'Any' gender input from the dropdown menu to
      * form a list 'Male' and 'Female', for passing to mongo query */
@@ -254,24 +272,34 @@ module.exports.findmatchResults = function(req,res){
         /*** 
          * RESULTS MATCHED FROM QUERY
          ***/
-        console.log('0th me interest: ', req.user.interests);
+        // console.log('0th me interest: ', req.user.interests);
         /* Add blank interest values if none exist */
-        if (!req.user.interests[0]) {
-          req.user.interests[0] = {interest1: '', interest2: '', interest3: ''};
-        };
-        var me = req.user.interests[0];
-        console.log('1st me: ', req.user.interests);
+        // if (!req.user.interests[0]) {
+        //   req.user.interests[0] = {interest1: '', interest2: '', interest3: ''};
+        // };
+        
+        /* Get my interests */
+        var myInterests = getInterestsFrom(req.user);
+        
+        console.log('getInterestsFrom(req.user): ', myInterests);
         
         /* loop through all matched results from mongo query */
-        var activityMatchStrength, other;
+        var activityMatchStrength, othersInterests;
         for(var i=0; i<matchResults.length; i++) {
+          
           /* determine age from birthdate */
           matchResults[i].age = age(matchResults[i].birthdate);
           console.log('match results: ', matchResults[i]);
+          
           /* Strength of match by similar activities */    
-          matchResults[i].activityMS = getActivityMatch(me, matchResults[i].interests);
+          matchResults[i].cleanedInterests = getInterestsFrom(matchResults[i])
+          matchResults[i].activityMS = getActivityMatch(myInterests, matchResults[i].cleanedInterests);
+
+          console.log('matchResults[i].cleanedInterests: ', matchResults[i].cleanedInterests);
           console.log('matchResults[i].activityMS: ',matchResults[i].activityMS)
         };
+        
+        /* Render the Match Results Page */
         res.render('findmatchResults.jade', {
           user: req.user,
           matchResults: matchResults
