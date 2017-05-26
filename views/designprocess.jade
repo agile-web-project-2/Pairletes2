@@ -3,4 +3,25 @@ extends layout
 block content
   h1.cover-heading Architecture, Design Choices and Process Difficulties
   br
-  p Talk about how design process works here
+  .contOuter.about
+    h2 Architecture
+    ul
+      li This application, Pairletes is based off of SimpleApp which utilises the following modules:
+        ul
+          li Express
+          li Passport & LocalStategy
+          li Express Session
+          li Cookie and Body Parser
+      li Pairletes preserves a basic Express MVC structure to route any web requests from the controller to the model, such as serve static pages and do CRUD work from the application to the MongoDB.
+      li We used MongoDB cloud platform, MLab to host our data.
+      li Heroku is connected to our code repository on Github to host our working application. 
+
+    h2 Design Choices
+    ul
+      li It's more like a MEN stack instead of the MEAN stack, as it doesn't have asynchronous data transfer and it is very much a static web application where a user gets routed from page to page. If time permitted, a single page application would be much preferred. However, due to time constraints and this being an introductory project to this js framework, we choose to not do single page app or use Angular which would require a big restructure of the application architecture.
+      li Initially we decided to attempt to employ a MVC structure where an API sits separately from main application server to respond to any routes requiring model access. However, we had to change to a less complicated structure where the model, controller and views sit in the route directory of the project. This was done part way through the project phase.
+
+    h2 Difficulties
+    ul
+      li This means that we had wasted a bit of time at the beginning of the project attempting to code within the API and server separate structure. This is due to the same reasons as above i.e. time constraints and lack of knowledge about the MEAN stack, this made the project much more complex. It became harder to visualise and understand how data is passed through each different route.
+      li Knowing what you want to do but not knowing how to implement it. A lot of trial and error occured, as with any coding, for many small things e.g. displaying db values into pre-existing DOM elements.

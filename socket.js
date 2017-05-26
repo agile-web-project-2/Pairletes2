@@ -1,15 +1,17 @@
-var io = require('socket.io')();
+var app = require('express');
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 var ctrlChat = require('./controllers/chat');
 
 var usernames = {};
 
-var rooms = ['room1', 'room2'];
+var rooms = ['Gym', 'BootCamp', 'Cycling', 'Rowing', 'Running', 'Triathalon'];
 
 io.on('connection', function(socket){
     
     //FOR PRIVATE MESSAGES
-    socket.on('newMessage', function(msg, io){
-    	io.socket.in(chat).emit('refresh messages', chat);
+    socket.on('newMessage', function(msg){
+    	//socket.to(chat).emit('refresh messages', chat);
     });
 
     socket.on('enterChat', function(chat){
@@ -21,12 +23,13 @@ io.on('connection', function(socket){
     socket.on('addUser', function(username){
     	console.log('joining chat')
     	socket.username = username;
-    	socket.room = 'room1';
+    	socket.room = 'Gym';
     	usernames[username] = username;
-    	socket.join('room1');
-    	socket.emit('updateChat', 'SERVER', 'you have connected to room1');
-    	socket.broadcast.to('room1').emit('updateChat', 'SERVER', username + ' has joined the room');
-    	socket.emit('updateRooms', rooms, 'room1');
+    	socket.join('Gym');
+    	socket.emit('updateChat', 'SERVER', 'you have connected to Gym');
+    	socket.broadcast.to('Gym').emit('updateChat', 'SERVER', username + ' has joined the room');
+    	socket.emit('updateRooms', rooms, 'Gym');
+        ctrlChat.connect(socket, socket.room);
     });
 
     socket.on('disconnect', function(){
@@ -39,7 +42,8 @@ io.on('connection', function(socket){
 
     socket.on('sendChat', function(msg){
     	socket.to(socket.room).emit('updateChat', socket.username, msg);
-    	socket.emit('updateChat', socket.username ,msg)
+    	socket.emit('updateChat', socket.username ,msg);
+        ctrlChat.message(msg, socket.room, socket.username);
     });
 
     socket.on('switchRoom', function(newroom){

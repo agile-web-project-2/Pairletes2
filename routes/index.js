@@ -58,13 +58,19 @@ router.get('/logout', function(req, res) {
 });
 
 /*****GET CHATROOM****/
+//render chat room page
 router.get('/CHATROOM', function(req, res){
   res.render('chatRoom', {user : req.user});
-})
+});
+
+//
 
 /***** GET CHAT *****/
 //gets all the chats into one page
-router.get('/messages', ctrlChat.getChats);
+router.get('/messages', function(req, res){
+  var chats = ctrlChat.getChats;
+  res.render('chat', {chats: chats, user: req.user});
+});
 
 //get a single chat
 router.get('/messages/:recipId', ctrlChat.enterChat);
@@ -72,8 +78,13 @@ router.get('/messages/:recipId', ctrlChat.enterChat);
 //send reply
 router.post('/messages/:chatId', ctrlChat.sendReply);
 
+//Page for creating new message
+router.get('/messages/newMessage/:recipId', function(req, res, next){
+  res.render('newMessage', { user: req.user });
+});
+
 //new conversation
-router.post('messages/newMessage/:recipId', ctrlChat.newMessage);
+router.post('/messages/newMessage/:recipId', ctrlChat.newMessage);
 
 router.get('/profile/:username', ctrlAccount.getProfile);
 //router.get('/profile/:username', ctrlAccount.getProfile);
