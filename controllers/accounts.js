@@ -65,37 +65,14 @@ module.exports.getProfile = function(req,res){
         }
 
         if (month < 10) {
-        month = '0' + month;
+          month = '0' + month;
         }
         x = year + '-' + month + '-' + dt;
 
-        //Check if gym returns a string or object
-        if (typeof account.gym != 'string'){
-          var gymVar = " ";
-        } else {
-          var gymVar = account.gym;
-        }
-
-        //Check if interests returns a string or object
-        if (typeof account.interests[0] == 'undefined' || typeof account.interests[0] == 'null'){
-          var intr = " ";
-        } else {
-          var intr = account.interests[0];
-        }
-
-        //Check if address returns a string or object
-        if (typeof account.address[0] == 'undefined'){
-          var addr = " ";
-        } else {
-          var addr = account.address[0];
-        }
-
-        //Check if aboutMe returns a string or object
-        if (typeof account.aboutMe == 'undefined'){
-          var about = " ";
-        } else {
-          var about = account.aboutMe;
-        }
+        var gymVar = account.gym;
+        var intr = account.interests;
+        var addr = account.address;
+        var about = account.aboutMe;
 
         res.render('profile.jade', {
             user: req.user,
@@ -123,7 +100,7 @@ module.exports.updateProfile = function(req,res){
   var account = new Account();
   //routed from /profile/:id
 
-  //Find the account
+  /*Find the account*/
   Account.findById(req.user.id, function(err, account){
     //Error handler
     if(err)
@@ -156,37 +133,15 @@ module.exports.updateProfile = function(req,res){
 *URL: /editprofile
 */
 module.exports.prefillUpdateProfile = function(req, res) {
-  if (typeof req.user.gym != 'string' || typeof req.user.gym == 'undefined' ){
-    var gymVar = " ";
-  } else {
-    var gymVar = req.user.gym;
-  }
 
-  //Check if interests returns a string or object
-  if (typeof req.user.interests[0] == 'undefined'){
-    var intr = " ";
-  } else {
-    var intr = req.user.interests[0];
-  }
-
-  //Check if address returns a string or object
-  if (typeof req.user.address[0] == 'undefined'){
-    var addr = " ";
-  } else {
-    var addr = req.user.address[0];
-  }
-
-  //Check if aboutMe returns a string or object
-  if (typeof req.user.aboutMe == 'undefined'){
-    var about = " ";
-  } else {
-    var about = req.user.aboutMe;
-  }
+  var gymVar = req.user.gym;
+  var intr = req.user.interests;
+  var addr = req.user.address;
+  var about = req.user.aboutMe;
 
   res.render('editprofile', {
       user: req.user,
       title: 'Edit Profile',
-      // account: account,
       gym: gymVar,
       interest: intr,
       address: addr,
@@ -197,17 +152,7 @@ module.exports.prefillUpdateProfile = function(req, res) {
 
 /*FIND MATCH*/
 module.exports.findmatchResults = function(req,res){
-
-    function getInterestsFrom(account) {
-      //Check if interests returns a string or object
-        if (typeof account.interests[0] == 'undefined' || typeof account.interests[0] == 'null'){
-          var intr = NaN;
-        } else {
-          var intr = account.interests[0];
-        }
-        return intr;
-    }
-    
+  
     function getActivityMatch(a, b) {
       /* The input structure should follow the format = { interest1: '', interest2: '', interest3: '' } 
        * The output is the number of matching interests from 'me' to 'other'  */
@@ -278,16 +223,9 @@ module.exports.findmatchResults = function(req,res){
         /*** 
          * RESULTS MATCHED FROM QUERY
          ***/
-        // console.log('0th me interest: ', req.user.interests);
-        /* Add blank interest values if none exist */
-        // if (!req.user.interests[0]) {
-        //   req.user.interests[0] = {interest1: '', interest2: '', interest3: ''};
-        // };
         
-        /* Get my interests */
-        var myInterests = getInterestsFrom(req.user);
-        
-        console.log('getInterestsFrom(req.user): ', myInterests);
+           
+        console.log('getInterestsFrom(req.user): ', req.user.interests);
         
         /* loop through all matched results from mongo query */
         var activityMatchStrength, othersInterests;
@@ -297,12 +235,11 @@ module.exports.findmatchResults = function(req,res){
           matchResults[i].age = age(matchResults[i].birthdate);
           console.log('match results: ', matchResults[i]);
           
-          /* Strength of match by similar activities */    
-          matchResults[i].cleanedInterests = getInterestsFrom(matchResults[i])
-          matchResults[i].activityMS = getActivityMatch(myInterests, matchResults[i].cleanedInterests);
+          /* Strength of match by similar activities */
+          matchResults[i].activityMatchStrength = getActivityMatch(req.user.interests, matchResults[i].interests);
 
-          console.log('matchResults[i].cleanedInterests: ', matchResults[i].cleanedInterests);
-          console.log('matchResults[i].activityMS: ',matchResults[i].activityMS)
+          console.log('matchResults[i].interests: ', matchResults[i].interests);
+          console.log('matchResults[i].activityMS: ',matchResults[i].activityMatchStrength)
         };
         
         /* Render the Match Results Page */

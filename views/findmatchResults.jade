@@ -25,10 +25,8 @@ block content
             h1
               strong #{match.username}
             p #{match.gender}  |  #{match.age}
-            if match.cleanedInterests 
-              p #{match.cleanedInterests.interest1} | #{match.cleanedInterests.interest2} | #{match.cleanedInterests.interest3}
-            else
-              p no interests yet
+
+            p.matchInterests #{match.interests.interest1} | #{match.interests.interest2} | #{match.interests.interest3}
             
 
             a(href="/profile/#{match.username}")
@@ -37,4 +35,14 @@ block content
             &nbsp;
             a(href="/messages/newMessage/#{match.username}")
               button.btn(type='button') Send a Message!
-              
+
+  script.
+    var toReplace = document.getElementsByClassName('matchInterests');
+    for(var i=0; i<toReplace.length; i++) {
+      if (toReplace[i].innerHTML == ' |  | ') {
+        toReplace[i].innerHTML = "no activities";
+        }
+    }
+    
+      
+  
