@@ -201,7 +201,7 @@ module.exports.findmatchResults = function(req,res){
     function getInterestsFrom(account) {
       //Check if interests returns a string or object
         if (typeof account.interests[0] == 'undefined' || typeof account.interests[0] == 'null'){
-          var intr = " ";
+          var intr = NaN;
         } else {
           var intr = account.interests[0];
         }
@@ -223,10 +223,13 @@ module.exports.findmatchResults = function(req,res){
         var otherInterestStr = b.interest1+' '+b.interest2+' '+b.interest3;
       } else return 0;
 
-      var searchStr = new RegExp(otherInterestStr.replace(/\s/g, '|'), 'g'); // create RegEx search string
-      var res = myInterestStr.match(searchStr); // find matching strings
+      // create RegEx search string
+      var searchStr = new RegExp(otherInterestStr.replace(/\s/g, '|'), 'g'); 
 
+      // find matching strings
+      var res = myInterestStr.match(searchStr); 
 
+      // return the activity match strength
       if (res) {
         console.log('Activity match strength: ', res.length);
         return res.length;
@@ -255,13 +258,16 @@ module.exports.findmatchResults = function(req,res){
      * Gym type as the logged in user */
     var gym = req.user.gym;
     console.log(gym);
+
+    var activity = req.body.activity;
+    console.log('activity: ', activity);
     
     
     /*** DO THE SEARCH QUERY ***/
     Account.
       find({
-        gender: {$in: gender}/*,*/
-        // gym: gym
+        gender: {$in: gender}//,
+        //interests: {$or: { interest1: 'rowing' }}
       }).
       limit(9).
       exec(function (err, matchResults) {

@@ -4,8 +4,20 @@ block style
   link(href='/css/findmatchResults.css', rel='stylesheet')
 
 block content   
+  if (!user)
+    h3.text-center Please Login to view your match results
+    br
+    p.lead
+      a.btn.btn-lg.btn-default(href='/login') Let's Login!
+
   if (user)
-    h3.text-center YOUR TOP MATCH RESULTS FOR...
+
+    h3.text-center 
+      | YOUR TOP 
+      &nbsp;
+      strong #{matchResults.length}
+      &nbsp; 
+      | MATCH RESULTS.
     .row.text-center
       each match in matchResults
         .col-sm-4
@@ -13,22 +25,16 @@ block content
             h1
               strong #{match.username}
             p #{match.gender}  |  #{match.age}
-            p #{match.cleanedInterests.interest1} | #{match.cleanedInterests.interest2} | #{match.cleanedInterests.interest3}
-            //- a(href="")
-            //-   button.btn.btn-default(type='button') Request
-            //- &nbsp;
-            //- &nbsp;
+            if match.cleanedInterests 
+              p #{match.cleanedInterests.interest1} | #{match.cleanedInterests.interest2} | #{match.cleanedInterests.interest3}
+            else
+              p no interests yet
+            
+
             a(href="/profile/#{match.username}")
               button.btn.btn-default(type='button') View profile
-            //- br
-            //- br
+
             &nbsp;
             a(href="/messages/newMessage/#{match.username}")
               button.btn(type='button') Send a Message!
               
-
-  if (!user)
-    h3.text-center Please Login to view your match results
-    br
-    p.lead
-      a.btn.btn-lg.btn-default(href='/login') Let's Login!
