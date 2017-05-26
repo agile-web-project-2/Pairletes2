@@ -3,4 +3,45 @@ extends layout
 block content
   h1.cover-heading The Matching Algorithm
   br
-  p Talk about how matching works here
+  p The matching algorithm aims to match you with the best fitness partner. To access the matching feature, the user must first be logged in. After, the user is automaticly re-directed to the find a match page. Otherwise, the user will be able to click on the "Find A Match!" link in the navigation bar.
+  h2 What is matched
+  h3 Step 1
+  p This algorithm is designed to grow and become more specific as the userbase grows. Currently the searches are generalised to include a matching to:
+  p selected activity: Bootcamp, Cycling, Running, Gym, Rowing, Triathalon
+  p a gender: Male, Female, Any
+  p These parameters form the initial stage of the query. This queries the mongodb based on this selection. And returns result of potential candidates.
+  h3 Step 2
+  p Once the first stage has returned a smaller subset of the data, further sorting is done. A new list is creaated for parsing the data to the view, the list also includes The age is determined from the date of birth. A match strength is also determined from your three interested activities. For any matching activities its counted towrds a match score. e.g.
+  table
+    th
+      td user
+      td interest1
+      td interest2
+      td interest3
+      td strength
+    tr
+      td me
+      td A
+      td B
+      td C
+      td -
+    tr
+      td p1
+      td B
+      td C
+      td D
+      td 2
+    tr
+      td p2
+      td E
+      td A
+      td F
+      td 1
+    tr
+      td p3
+      td E
+      td F
+      td D
+      td 0
+
+  p The users are then displayed in order by there strength of match, and a colored tile indicated visually how strong the match is.
