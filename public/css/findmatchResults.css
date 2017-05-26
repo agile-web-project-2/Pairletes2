@@ -14,3 +14,11 @@
 .btn {
     color: #483f3f;
 }
+
+.strength-3 {
+    background-color: green;
+}
+
+.strength-2 {
+    background-color: yellow;
+}
