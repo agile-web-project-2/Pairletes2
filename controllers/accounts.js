@@ -65,37 +65,14 @@ module.exports.getProfile = function(req,res){
         }
 
         if (month < 10) {
-        month = '0' + month;
+          month = '0' + month;
         }
         x = year + '-' + month + '-' + dt;
 
-        //Check if gym returns a string or object
-        if (typeof account.gym != 'string'){
-          var gymVar = " ";
-        } else {
-          var gymVar = account.gym;
-        }
-
-        //Check if interests returns a string or object
-        if (typeof account.interests[0] == 'undefined' || typeof account.interests[0] == 'null'){
-          var intr = " ";
-        } else {
-          var intr = account.interests[0];
-        }
-
-        //Check if address returns a string or object
-        if (typeof account.address[0] == 'undefined'){
-          var addr = " ";
-        } else {
-          var addr = account.address[0];
-        }
-
-        //Check if aboutMe returns a string or object
-        if (typeof account.aboutMe == 'undefined'){
-          var about = " ";
-        } else {
-          var about = account.aboutMe;
-        }
+        var gymVar = account.gym;
+        var intr = account.interests;
+        var addr = account.address;
+        var about = account.aboutMe;
 
         res.render('profile.jade', {
             user: req.user,
@@ -123,7 +100,7 @@ module.exports.updateProfile = function(req,res){
   var account = new Account();
   //routed from /profile/:id
 
-  //Find the account
+  /*Find the account*/
   Account.findById(req.user.id, function(err, account){
     //Error handler
     if(err)
@@ -156,37 +133,15 @@ module.exports.updateProfile = function(req,res){
 *URL: /editprofile
 */
 module.exports.prefillUpdateProfile = function(req, res) {
-  if (typeof req.user.gym != 'string' || typeof req.user.gym == 'undefined' ){
-    var gymVar = " ";
-  } else {
-    var gymVar = req.user.gym;
-  }
 
-  //Check if interests returns a string or object
-  if (typeof req.user.interests[0] == 'undefined'){
-    var intr = " ";
-  } else {
-    var intr = req.user.interests[0];
-  }
-
-  //Check if address returns a string or object
-  if (typeof req.user.address[0] == 'undefined'){
-    var addr = " ";
-  } else {
-    var addr = req.user.address[0];
-  }
-
-  //Check if aboutMe returns a string or object
-  if (typeof req.user.aboutMe == 'undefined'){
-    var about = " ";
-  } else {
-    var about = req.user.aboutMe;
-  }
+  var gymVar = req.user.gym;
+  var intr = req.user.interests;
+  var addr = req.user.address;
+  var about = req.user.aboutMe;
 
   res.render('editprofile', {
       user: req.user,
       title: 'Edit Profile',
-      // account: account,
       gym: gymVar,
       interest: intr,
       address: addr,
@@ -197,22 +152,99 @@ module.exports.prefillUpdateProfile = function(req, res) {
 
 /*FIND MATCH*/
 module.exports.findmatchResults = function(req,res){
-    //Account.findOne({username: 'p'}, 'username name gender birthdate gym address interests aboutMe', function (err, matchResults) {
+  
+    function getActivityMatch(a, b) {
+      /* The input structure should follow the format = { interest1: '', interest2: '', interest3: '' } 
+       * The output is the number of matching interests from 'me' to 'other'  */
+      console.log('me: ', a);
+      if (a.interest1 && a.interest2 && a.interest3) {
+        console.log("Construct my interest string");
+        var myInterestStr = a.interest1+' '+a.interest2+' '+a.interest3;
+      } else return 0;
+
+      console.log('other: ', b); 
+      if (b.interest1 && b.interest2 && b.interest3) {
+        console.log("Construct others interest string");
+        var otherInterestStr = b.interest1+' '+b.interest2+' '+b.interest3;
+      } else return 0;
+
+      // create RegEx search string
+      var searchStr = new RegExp(otherInterestStr.replace(/\s/g, '|'), 'g'); 
+
+      // find matching strings
+      var res = myInterestStr.match(searchStr); 
+
+      // return the activity match strength
+      if (res) {
+        console.log('Activity match strength: ', res.length);
+        return res.length;
+      } else {
+        console.log('Activity match strength: Not determined');
+        return 0;
+      } 
+    };
+    
+    function age(birthdate) {
+      /* Input a date in Date() format; return years since date */ 
+      return Math.floor((new Date() - birthdate)/31540000000);
+    }
+
+
+    /* Adjust the 'Any' gender input from the dropdown menu to
+     * form a list 'Male' and 'Female', for passing to mongo query */
     var gender
+    if (req.body.gender == 'Any') {
+      gender = ['Male', 'Female'];
+    } else {
+     gender = req.body.gender;
+    }
 
-    // if (req.body.gender == '')
-    // gender = req.body.gender;
+    /* Limit the potential match candidates to people of the same 
+     * Gym type as the logged in user */
+    var gym = req.user.gym;
+    console.log(gym);
 
+    var activity = req.body.activity;
+    console.log('activity: ', activity);
+    
+    
+    /*** DO THE SEARCH QUERY ***/
     Account.
-      find({}).
+      find({
+        gender: {$in: gender},
+        $or: [{"interests.interest1": activity},
+              {"interests.interest2": activity},
+              {"interests.interest3": activity}] 
+      }).
       limit(9).
       exec(function (err, matchResults) {
       if (err) { 
         console.log(err);
         res.render('error.jade', { message: "There is a matching error" });
       } else {
-        console.log('matchResults ---------------------\n', matchResults);
-        console.log('matchResults.username ---------------------\n', matchResults.username);
+        /*** 
+         * RESULTS MATCHED FROM QUERY
+         ***/
+        
+           
+        console.log('getInterestsFrom(req.user): ', req.user.interests);
+        
+        /* loop through all matched results from mongo query */
+        var activityMatchStrength, othersInterests;
+        for(var i=0; i<matchResults.length; i++) {
+          
+          /* determine age from birthdate */
+          matchResults[i].age = age(matchResults[i].birthdate);
+          console.log('match results: ', matchResults[i]);
+          
+          /* Strength of match by similar activities */
+          matchResults[i].activityMatchStrength = getActivityMatch(req.user.interests, matchResults[i].interests);
+
+          console.log('matchResults[i].interests: ', matchResults[i].interests);
+          console.log('matchResults[i].activityMS: ',matchResults[i].activityMatchStrength)
+        };
+        
+        /* Render the Match Results Page */
         res.render('findmatchResults.jade', {
           user: req.user,
           matchResults: matchResults

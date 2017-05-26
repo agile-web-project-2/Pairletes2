@@ -8,10 +8,15 @@ var Account = new Schema({
     email: String,
     //password: String,
     gender: String,
-    birthdate: Date,
+    birthdate: {
+        type: Date,
+        required: true,
+        min: new Date('1910-01-01'),
+        max: Date.now 
+    },
     gym: String,
-    address: [{street: String, city: String, state: String, country: String}],
-    interests: [{interest1: String, interest2: String, interest3: String}],
+    address: {street: String, city: String, state: String, country: String},
+    interests: {interest1: String, interest2: String, interest3: String},
     aboutMe: String
 }, { minimize: false });
 
