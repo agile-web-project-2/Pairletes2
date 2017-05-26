@@ -8,15 +8,6 @@ var usernames = {};
 var rooms = ['Gym', 'BootCamp', 'Cycling', 'Rowing', 'Running', 'Triathalon'];
 
 io.on('connection', function(socket){
-    
-    //FOR PRIVATE MESSAGES
-    socket.on('newMessage', function(msg){
-    	//socket.to(chat).emit('refresh messages', chat);
-    });
-
-    socket.on('enterChat', function(chat){
-    	socket.join(chat);
-    });
 
     //FOR CHAT ROOMS
     

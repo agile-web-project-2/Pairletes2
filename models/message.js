@@ -9,6 +9,10 @@ var msgSchema = new mongoose.Schema({
 		type: String,
 		required: true
 	},
+	reciever: {
+		type: String,
+		required: true
+	},
 	body: {
 		type: String,
 		required: true

@@ -65,22 +65,19 @@ router.get('/CHATROOM', function(req, res){
 
 /***** GET CHAT *****/
 //gets all the chats into one page
-router.get('/messages', function(req, res){
-  var chats = ctrlChat.getChats;
-  res.render('chat', {chats: chats, user: req.user});
-});
+router.get('/messages', ctrlChat.getChats);
 
 //get a single chat
-router.get('/messages/:recipId', ctrlChat.enterChat);
+router.get('/messages/:chatName/:chatId', ctrlChat.enterChat);
 
 //send reply
-router.post('/messages/:chatId', ctrlChat.sendReply);
+router.post('/messages/:recipName/:chatId', ctrlChat.sendReply);
 
 //Page for creating new message
 router.get('/messages/newMessage/:recipId', ctrlChat.createNewMessage);
 
 //new conversation
-router.post('/messages/newMessage/:recipId', ctrlChat.newMessage);
+router.post('/messages/newMessage/:recipName/:recipId', ctrlChat.newMessage);
 
 router.get('/profile/:username', ctrlAccount.getProfile);
 //router.get('/profile/:username', ctrlAccount.getProfile);
