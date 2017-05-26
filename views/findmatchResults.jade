@@ -1,5 +1,8 @@
 extends layout
 
+block style
+  link(href='/css/findmatchResults.css', rel='stylesheet')
+
 block content   
   if (user)
     h3.text-center YOUR TOP MATCH RESULTS FOR...
@@ -9,7 +12,7 @@ block content
           .thumbnail
             h1
               strong #{match.username}
-            p Male
+            p #{match.gender}  |  #{match.age}
             //- a(href="")
             //-   button.btn.btn-default(type='button') Request
             //- &nbsp;

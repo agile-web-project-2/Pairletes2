@@ -197,22 +197,81 @@ module.exports.prefillUpdateProfile = function(req, res) {
 
 /*FIND MATCH*/
 module.exports.findmatchResults = function(req,res){
-    //Account.findOne({username: 'p'}, 'username name gender birthdate gym address interests aboutMe', function (err, matchResults) {
+    
+    function getActivityMatch(me, other) {
+      /* The input structure should follow the format = { interest1: '', interest2: '', interest3: '' } 
+       * The output is the number of matching interests from 'me' to 'other'  */
+      console.log('me: ', me);
+
+      if (typeof(me.interest1 || me.interest2 || me.interest3) !== 'undefined') {
+        console.log("passes through me");
+        var myInterestStr = me.interest1+' '+me.interest2+' '+me.interest3;
+      } else return 0;
+
+      console.log('other: ', other); 
+      if (other.interest1 && other.interest2 && other.interest3) {
+        console.log("passes through other");
+        var otherInterestStr = other.interest1+' '+other.interest2+' '+other.interest3;
+      } else return 0;
+
+      var searchStr = new RegExp(otherInterestStr.replace(/\s/g, '|'), 'g'); // create RegEx search string
+      var res = myInterestStr.match(searchStr); // find matching strings
+      return res.leng
+    };
+    
+    function age(birthdate) {
+      /* Input a date in Date() format; return years since date */ 
+      return Math.floor((new Date() - birthdate)/31540000000);
+    }
+
+    /* Adjust the 'Any' gender input from the dropdown menu to
+     * form a list 'Male' and 'Female', for passing to mongo query */
     var gender
+    if (req.body.gender == 'Any') {
+      gender = ['Male', 'Female'];
+    } else {
+     gender = req.body.gender;
+    }
 
-    // if (req.body.gender == '')
-    // gender = req.body.gender;
-
+    /* Limit the potential match candidates to people of the same 
+     * Gym type as the logged in user */
+    var gym = req.user.gym;
+    console.log(gym);
+    
+    
+    /*** DO THE SEARCH QUERY ***/
     Account.
-      find({}).
+      find({
+        gender: {$in: gender}/*,*/
+        // gym: gym
+      }).
       limit(9).
       exec(function (err, matchResults) {
       if (err) { 
         console.log(err);
         res.render('error.jade', { message: "There is a matching error" });
       } else {
-        console.log('matchResults ---------------------\n', matchResults);
-        console.log('matchResults.username ---------------------\n', matchResults.username);
+        /*** 
+         * RESULTS MATCHED FROM QUERY
+         ***/
+        console.log('0th me interest: ', req.user.interests);
+        /* Add blank interest values if none exist */
+        if (!req.user.interests[0]) {
+          req.user.interests[0] = {interest1: '', interest2: '', interest3: ''};
+        };
+        var me = req.user.interests[0];
+        console.log('1st me: ', req.user.interests);
+        
+        /* loop through all matched results from mongo query */
+        var activityMatchStrength, other;
+        for(var i=0; i<matchResults.length; i++) {
+          /* determine age from birthdate */
+          matchResults[i].age = age(matchResults[i].birthdate);
+          console.log('match results: ', matchResults[i]);
+          /* Strength of match by similar activities */    
+          matchResults[i].activityMS = getActivityMatch(me, matchResults[i].interests);
+          console.log('matchResults[i].activityMS: ',matchResults[i].activityMS)
+        };
         res.render('findmatchResults.jade', {
           user: req.user,
           matchResults: matchResults

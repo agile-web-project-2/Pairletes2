@@ -13,6 +13,8 @@ var Account = require('../models/account');
 var dummy = require('./dummy-account-data.js');
 var db;
 
+require('../controllers/accounts');
+
 
 
 describe('Matching Queries: ', function() {
@@ -62,7 +64,6 @@ describe('Matching Queries: ', function() {
             });   
     });
 
-   
 
     afterEach(function(done) {
        done();
