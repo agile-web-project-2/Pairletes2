@@ -49,7 +49,7 @@ module.exports.newMessage = function(req, res, next){
 			else{
 				res.status(200).json({ message: 'Conversation start!', chatId: chat._id });
 				console.log(data, 'message saved');
-				return next();
+				res.redirect('/findmatch', {user: req.user});
 			}
 		  });
 		}
