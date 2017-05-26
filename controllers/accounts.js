@@ -211,8 +211,10 @@ module.exports.findmatchResults = function(req,res){
     /*** DO THE SEARCH QUERY ***/
     Account.
       find({
-        gender: {$in: gender}//,
-        //interests: {$or: { interest1: 'rowing' }}
+        gender: {$in: gender},
+        $or: [{"interests.interest1": activity},
+              {"interests.interest2": activity},
+              {"interests.interest3": activity}] 
       }).
       limit(9).
       exec(function (err, matchResults) {
