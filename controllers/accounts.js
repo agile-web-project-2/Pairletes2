@@ -123,7 +123,6 @@ module.exports.updateProfile = function(req,res){
         return;
       }
         res.redirect('/profile/'+req.user.username);
-      //res.json(account);
     })
 
   });

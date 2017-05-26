@@ -27,7 +27,7 @@ block content
     #chatwindow
       #contents
     
-        form(action="/messages/newMessage/#{recip.username}", method="post", id='msgForm')
+        form(action="/messages/newMessage/#{recip[0].username}/#{recip[0]._id}", method="post", id='msgForm')
           input.form-control(id="composedMessage" autocomplete="off" name='composedMessage')
           br
           br

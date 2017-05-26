@@ -1,29 +1,21 @@
 extends layout
 
-block content
-    script.
-       console.log('loading script');
-       var socket = io();
-       console.log('connected');
-
-       socket.emit('getChats', user._id);
-
-       socket.on('generateChats', function(chats){
-       	$('#chats').empty();
-       	   $.each(chats, function(key, value){
-       	   	$('#chats').append('<li><a href="#" onclick="enterChat(\'' + value._id + '\')")>' +value.name + '</a></li>')
-       	   });
-       });
-
-       function enterChat(chat){
-       	    socket.emit('enterChat', chat)
-       }
+block content      
 
     .container
-        #chatwindow
-            #contents
-
-            h1 Chats
+      #chatwindow
+        #contents
+          h1 Chat between #{messages[0].author} and #{messages[0].reciever}
+          .chattop
             ul(id="chats")
-                each chat in chats
-                   li= chat
+              each message in messages
+                li
+                  p #{message.author}: #{message.body}
+
+          .chatbot
+            form(action="/messages/#{messages[0].reciever}/#{messages[0].chatId}", method="post", id='msgForm')
+              input.form-control(id="composedMessage" autocomplete="off" name='composedMessage')
+              br
+              br
+              br
+              input.btn.btn-default(type='submit', id='dataSend' value="Send")
