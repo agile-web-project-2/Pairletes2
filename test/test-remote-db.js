@@ -47,9 +47,9 @@ describe('Remote Test Database Connect', function(){
     });
 
     afterEach(function(done) {
-        Dummy.remove({}, function() {
+        // Dummy.remove({}, function() {
             done();
-        });
+        // });
     });
 
     after(function(done){// after all the test have finished

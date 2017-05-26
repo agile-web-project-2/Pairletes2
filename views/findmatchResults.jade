@@ -15,13 +15,13 @@ block content
     h3.text-center 
       | YOUR TOP 
       &nbsp;
-      strong #{matchResults.length}
+      strong #{newList.length}
       &nbsp; 
-      | MATCH RESULTS.
+      | #{selectedActivity} MATCH RESULTS.
     .row.text-center
-      each match in matchResults
+      each match in newList
         .col-sm-4
-          .thumbnail
+          div(class="thumbnail strength-#{match.activityMatchStrength}") 
             h1
               strong #{match.username}
             p #{match.gender}  |  #{match.age}
@@ -43,6 +43,7 @@ block content
         toReplace[i].innerHTML = "no activities";
         }
     }
-    
+
+
       
   

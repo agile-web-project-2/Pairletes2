@@ -1,10 +1,12 @@
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
+var _ = require('underscore');
 
 require('../models/db');
 var mongoose = require('mongoose');
 var Account = mongoose.model('Account');
+
 
 /* Register new user */
 module.exports.registerNewUser = function(req, res) {
@@ -183,7 +185,7 @@ module.exports.findmatchResults = function(req,res){
       } 
     };
     
-    function age(birthdate) {
+    function getAge(birthdate) {
       /* Input a date in Date() format; return years since date */ 
       return Math.floor((new Date() - birthdate)/31540000000);
     }
@@ -215,7 +217,7 @@ module.exports.findmatchResults = function(req,res){
               {"interests.interest2": activity},
               {"interests.interest3": activity}] 
       }).
-      limit(9).
+      //limit(9).
       exec(function (err, matchResults) {
       if (err) { 
         console.log(err);
@@ -224,29 +226,41 @@ module.exports.findmatchResults = function(req,res){
         /*** 
          * RESULTS MATCHED FROM QUERY
          ***/
-        
-           
         console.log('getInterestsFrom(req.user): ', req.user.interests);
         
         /* loop through all matched results from mongo query */
-        var activityMatchStrength, othersInterests;
+        var newList = [];
         for(var i=0; i<matchResults.length; i++) {
-          
-          /* determine age from birthdate */
-          matchResults[i].age = age(matchResults[i].birthdate);
-          console.log('match results: ', matchResults[i]);
-          
-          /* Strength of match by similar activities */
-          matchResults[i].activityMatchStrength = getActivityMatch(req.user.interests, matchResults[i].interests);
+          // formulate new list from query results
+          newList[i] = {
+            username: matchResults[i].username,
+            name: matchResults[i].name,
+            gender: matchResults[i].gender,
+            age: getAge(matchResults[i].birthdate),
+            activityMatchStrength: getActivityMatch(req.user.interests, matchResults[i].interests),
+            interests: matchResults[i].interests,
+            gym: matchResults[i].gym
+          };
 
-          console.log('matchResults[i].interests: ', matchResults[i].interests);
-          console.log('matchResults[i].activityMS: ',matchResults[i].activityMatchStrength)
         };
-        
+
+        /** UNDERSCORE TO QUERY ON THE FRONT END **/
+        newList = _.sortBy(newList, 'activityMatchStrength');
+        numSameGym = _.indexBy(newList, 'gym');
+        numSameState = _.indexBy(newList, 'state');
+
+        var myGym = req.user.gym
+
+        console.log('numSameGym:', _.size({numSameGym})), 
+        console.log('numSameGym: ', numSameGym );
+        console.log('numSameGym: ', newList );
+
         /* Render the Match Results Page */
         res.render('findmatchResults.jade', {
           user: req.user,
-          matchResults: matchResults
+          matchResults: matchResults,
+          newList: newList.reverse(),
+          selectedActivity: activity.toUpperCase()
         });
       }
     });   
